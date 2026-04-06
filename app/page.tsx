@@ -8,7 +8,7 @@ export default function Home() {
     }}>
       <div style={{ maxWidth: 'var(--container-narrow)', textAlign: 'center' }}>
         <h1 className="display" style={{ marginBottom: 'var(--space-6)' }}>
-          Harmonics Industries
+          Harmonics<sup style={{ fontSize: '0.5em', verticalAlign: 'super' }}>24</sup>
         </h1>
         <p className="text-gradient" style={{
           fontSize: 'var(--text-h2)',
