@@ -1,0 +1,211 @@
+/**
+ * Harmonics Industries — Design Tokens
+ * Industrial Precision, Human Scale
+ */
+
+:root {
+  /* ====================================
+   * COLOR — Foundation
+   * ==================================== */
+  --color-obsidian: #0a0a0a;
+  --color-graphite: #1a1a1a;
+  --color-steel: #3d3d3d;
+  --color-mist: #e5e5e5;
+  --color-vapor: #f5f5f5;
+  --color-white: #ffffff;
+
+  /* ====================================
+   * COLOR — Accent (Harmonic Resonance)
+   * ==================================== */
+  --color-frequency: #6366f1;
+  --color-amplitude: #8b5cf6;
+  --color-wavelength: #06b6d4;
+
+  /* ====================================
+   * COLOR — Semantic
+   * ==================================== */
+  --color-success: #10b981;
+  --color-warning: #f59e0b;
+  --color-error: #ef4444;
+
+  /* ====================================
+   * COLOR — Gradients
+   * ==================================== */
+  --gradient-harmonic: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+  --gradient-industrial: linear-gradient(180deg, #1a1a1a 0%, #0a0a0a 100%);
+
+  /* ====================================
+   * COLOR — RGB Variants (for opacity)
+   * ==================================== */
+  --rgb-frequency: 99, 102, 241;
+  --rgb-obsidian: 10, 10, 10;
+
+  /* ====================================
+   * TYPOGRAPHY — Font Stack
+   * ==================================== */
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', 'SF Mono', monospace;
+
+  /* ====================================
+   * TYPOGRAPHY — Size Scale
+   * ==================================== */
+  --text-display: 3.5rem;   /* 56px */
+  --text-h1: 2.5rem;        /* 40px */
+  --text-h2: 1.75rem;       /* 28px */
+  --text-h3: 1.25rem;       /* 20px */
+  --text-body: 1rem;        /* 16px */
+  --text-small: 0.875rem;   /* 14px */
+  --text-mono: 0.875rem;    /* 14px */
+
+  /* ====================================
+   * TYPOGRAPHY — Line Height
+   * ==================================== */
+  --leading-tight: 1.1;
+  --leading-snug: 1.2;
+  --leading-normal: 1.4;
+  --leading-relaxed: 1.6;
+  --leading-mono: 1.7;
+
+  /* ====================================
+   * TYPOGRAPHY — Letter Spacing
+   * ==================================== */
+  --tracking-tight: -0.02em;
+  --tracking-normal: 0;
+  --tracking-wide: 0.05em;
+
+  /* ====================================
+   * TYPOGRAPHY — Font Weight
+   * ==================================== */
+  --weight-regular: 400;
+  --weight-medium: 500;
+  --weight-semibold: 600;
+  --weight-bold: 700;
+
+  /* ====================================
+   * SPACING — 4px Base Unit
+   * ==================================== */
+  --space-1: 0.25rem;   /* 4px */
+  --space-2: 0.5rem;    /* 8px */
+  --space-3: 0.75rem;   /* 12px */
+  --space-4: 1rem;      /* 16px */
+  --space-5: 1.25rem;   /* 20px */
+  --space-6: 1.5rem;    /* 24px */
+  --space-8: 2rem;      /* 32px */
+  --space-10: 2.5rem;   /* 40px */
+  --space-12: 3rem;     /* 48px */
+  --space-16: 4rem;     /* 64px */
+  --space-20: 5rem;     /* 80px */
+  --space-24: 6rem;     /* 96px */
+
+  /* ====================================
+   * LAYOUT — Containers
+   * ==================================== */
+  --container-narrow: 640px;
+  --container-main: 896px;
+  --container-wide: 1200px;
+  --container-max: 1400px;
+
+  /* ====================================
+   * LAYOUT — Breakpoints
+   * ==================================== */
+  --bp-sm: 640px;
+  --bp-md: 768px;
+  --bp-lg: 1024px;
+  --bp-xl: 1280px;
+  --bp-2xl: 1536px;
+
+  /* ====================================
+   * LAYOUT — Grid
+   * ==================================== */
+  --grid-columns: 12;
+  --grid-gap: var(--space-6);
+  --grid-margin: var(--space-6);
+
+  /* ====================================
+   * BORDER — Radius
+   * ==================================== */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-full: 9999px;
+
+  /* ====================================
+   * BORDER — Width
+   * ==================================== */
+  --border-width-hair: 1px;
+  --border-width-default: 1px;
+  --border-width-thick: 2px;
+
+  /* ====================================
+   * SHADOW — Elevation
+   * ==================================== */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 24px rgba(0, 0, 0, 0.12);
+  --shadow-xl: 0 20px 40px rgba(0, 0, 0, 0.15);
+
+  /* Colored shadows for accent elements */
+  --shadow-frequency: 0 4px 16px rgba(var(--rgb-frequency), 0.25);
+
+  /* ====================================
+   * MOTION — Duration
+   * ==================================== */
+  --duration-fast: 100ms;
+  --duration-normal: 200ms;
+  --duration-slow: 300ms;
+
+  /* ====================================
+   * MOTION — Easing
+   * ==================================== */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in: cubic-bezier(0.7, 0, 0.84, 0);
+  --ease-default: cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* ====================================
+   * DATA VIZ — Palette
+   * ==================================== */
+  --viz-1: var(--color-frequency);
+  --viz-2: var(--color-amplitude);
+  --viz-3: var(--color-wavelength);
+  --viz-4: var(--color-success);
+  --viz-5: var(--color-warning);
+
+  /* ====================================
+   * Z-INDEX — Scale
+   * ==================================== */
+  --z-dropdown: 100;
+  --z-sticky: 200;
+  --z-modal: 300;
+  --z-tooltip: 400;
+}
+
+/* ====================================
+ * DARK MODE
+ * ==================================== */
+[data-theme='dark'],
+.dark {
+  --color-bg-primary: #0a0a0a;
+  --color-bg-secondary: #1a1a1a;
+  --color-bg-surface: #141414;
+  --color-text-primary: #fafafa;
+  --color-text-secondary: #a3a3a3;
+  --color-border: #262626;
+
+  /* Override foundation colors for dark mode */
+  --color-obsidian: #fafafa;
+  --color-graphite: #f0f0f0;
+  --color-steel: #a3a3a3;
+  --color-mist: #262626;
+  --color-vapor: #141414;
+  --color-white: #0a0a0a;
+}
+
+/* ====================================
+ * UTILITIES — Opacity Variants
+ * ==================================== */
+:root {
+  --opacity-disabled: 0.5;
+  --opacity-muted: 0.7;
+  --opacity-subtle: 0.3;
+}

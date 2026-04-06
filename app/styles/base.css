@@ -1,0 +1,188 @@
+/**
+ * Harmonics Industries — Base Styles
+ * Reset and foundational styles
+ */
+
+/* ====================================
+ * RESET — Modern baseline
+ * ==================================== */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  font-family: var(--font-sans);
+  font-size: var(--text-body);
+  font-weight: var(--weight-regular);
+  line-height: var(--leading-relaxed);
+  color: var(--color-obsidian);
+  background-color: var(--color-white);
+  min-height: 100vh;
+}
+
+/* ====================================
+ * TYPOGRAPHY — Headings
+ * ==================================== */
+h1, h2, h3, h4, h5, h6 {
+  font-weight: var(--weight-bold);
+  line-height: var(--leading-tight);
+  letter-spacing: var(--tracking-tight);
+}
+
+h1 {
+  font-size: var(--text-h1);
+}
+
+h2 {
+  font-size: var(--text-h2);
+}
+
+h3 {
+  font-size: var(--text-h3);
+}
+
+.display {
+  font-size: var(--text-display);
+  letter-spacing: var(--tracking-tight);
+}
+
+/* ====================================
+ * TYPOGRAPHY — Body
+ * ==================================== */
+p {
+  margin-bottom: var(--space-4);
+}
+
+a {
+  color: var(--color-frequency);
+  text-decoration: none;
+  transition: color var(--duration-fast) var(--ease-default);
+}
+
+a:hover {
+  color: var(--color-amplitude);
+}
+
+/* ====================================
+ * TYPOGRAPHY — Code
+ * ==================================== */
+code,
+kbd,
+pre,
+samp {
+  font-family: var(--font-mono);
+  font-size: var(--text-mono);
+  line-height: var(--leading-mono);
+}
+
+code {
+  background: var(--color-vapor);
+  padding: var(--space-1) var(--space-2);
+  border-radius: var(--radius-sm);
+  font-size: 0.875em;
+}
+
+pre {
+  background: var(--color-graphite);
+  color: var(--color-white);
+  padding: var(--space-6);
+  border-radius: var(--radius-md);
+  overflow-x: auto;
+}
+
+pre code {
+  background: transparent;
+  padding: 0;
+  color: inherit;
+}
+
+/* ====================================
+ * TYPOGRAPHY — Small
+ * ==================================== */
+small,
+.text-small {
+  font-size: var(--text-small);
+  line-height: var(--leading-snug);
+}
+
+/* ====================================
+ * LAYOUT — Container
+ * ==================================== */
+.container {
+  width: 100%;
+  max-width: var(--container-wide);
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: var(--space-6);
+  padding-right: var(--space-6);
+}
+
+.container--narrow {
+  max-width: var(--container-narrow);
+}
+
+.container--main {
+  max-width: var(--container-main);
+}
+
+.container--max {
+  max-width: var(--container-max);
+}
+
+/* ====================================
+ * LAYOUT — Section
+ * ==================================== */
+.section {
+  padding-top: var(--space-16);
+  padding-bottom: var(--space-16);
+}
+
+@media (min-width: 768px) {
+  .section {
+    padding-top: var(--space-20);
+    padding-bottom: var(--space-20);
+  }
+}
+
+/* ====================================
+ * UTILITIES — Text
+ * ==================================== */
+.text-center {
+  text-align: center;
+}
+
+.text-muted {
+  opacity: var(--opacity-muted);
+}
+
+.text-gradient {
+  background: var(--gradient-harmonic);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ====================================
+ * UTILITIES — Visually Hidden
+ * ==================================== */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}

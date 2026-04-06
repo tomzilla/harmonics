@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Harmonics Industries — Design System</title>
+  <link rel="stylesheet" href="../app/styles/tokens.css">
+  <link rel="stylesheet" href="../app/styles/base.css">
+  <link rel="stylesheet" href="../app/styles/components.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    /* Demo-specific styles */
+    body {
+      padding: var(--space-12);
+      background: var(--color-vapor);
+    }
+    .demo-section {
+      max-width: 900px;
+      margin: 0 auto var(--space-16);
+      background: var(--color-white);
+      padding: var(--space-8);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--color-mist);
+    }
+    .demo-title {
+      font-size: var(--text-small);
+      text-transform: uppercase;
+      letter-spacing: var(--tracking-wide);
+      color: var(--color-steel);
+      margin-bottom: var(--space-6);
+      padding-bottom: var(--space-4);
+      border-bottom: 1px solid var(--color-mist);
+    }
+    .demo-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: var(--space-4);
+    }
+    .demo-row {
+      display: flex;
+      gap: var(--space-4);
+      flex-wrap: wrap;
+      align-items: center;
+      margin-bottom: var(--space-4);
+    }
+    .color-swatch {
+      width: 120px;
+      height: 80px;
+      border-radius: var(--radius-sm);
+      border: 1px solid rgba(0,0,0,0.1);
+      display: flex;
+      align-items: flex-end;
+      padding: var(--space-2);
+      font-size: var(--text-small);
+      font-family: var(--font-mono);
+    }
+    .swatch-light {
+      color: var(--color-obsidian);
+    }
+    .swatch-dark {
+      color: var(--color-white);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Color Palette -->
+  <section class="demo-section">
+    <h2 class="demo-title">Color — Foundation</h2>
+    <div class="demo-grid">
+      <div>
+        <div class="color-swatch swatch-dark" style="background: var(--color-obsidian)">obsidian</div>
+        <code style="font-size: 11px;">#0a0a0a</code>
+      </div>
+      <div>
+        <div class="color-swatch swatch-dark" style="background: var(--color-graphite)">graphite</div>
+        <code style="font-size: 11px;">#1a1a1a</code>
+      </div>
+      <div>
+        <div class="color-swatch swatch-light" style="background: var(--color-steel)">steel</div>
+        <code style="font-size: 11px;">#3d3d3d</code>
+      </div>
+      <div>
+        <div class="color-swatch swatch-light" style="background: var(--color-mist)">mist</div>
+        <code style="font-size: 11px;">#e5e5e5</code>
+      </div>
+      <div>
+        <div class="color-swatch swatch-light" style="background: var(--color-vapor)">vapor</div>
+        <code style="font-size: 11px;">#f5f5f5</code>
+      </div>
+      <div>
+        <div class="color-swatch swatch-dark" style="background: var(--color-white); border: 1px solid var(--color-mist);">white</div>
+        <code style="font-size: 11px;">#ffffff</code>
+      </div>
+    </div>
+  </section>
+
+  <!-- Accent Colors -->
+  <section class="demo-section">
+    <h2 class="demo-title">Color — Harmonic Accent</h2>
+    <div class="demo-grid">
+      <div>
+        <div class="color-swatch swatch-light" style="background: var(--color-frequency)">frequency</div>
+        <code style="font-size: 11px;">#6366f1</code>
+      </div>
+      <div>
+        <div class="color-swatch swatch-light" style="background: var(--color-amplitude)">amplitude</div>
+        <code style="font-size: 11px;">#8b5cf6</code>
+      </div>
+      <div>
+        <div class="color-swatch swatch-dark" style="background: var(--color-wavelength)">wavelength</div>
+        <code style="font-size: 11px;">#06b6d4</code>
+      </div>
+    </div>
+  </section>
+
+  <!-- Typography -->
+  <section class="demo-section">
+    <h2 class="demo-title">Typography — Scale</h2>
+    <div style="display: flex; flex-direction: column; gap: var(--space-6);">
+      <div>
+        <p class="display">Display — Harmonics Industries</p>
+        <code style="font-size: 11px; color: var(--color-steel);">3.5rem / 56px — Weight: 700</code>
+      </div>
+      <div>
+        <h1>Heading 1 — Industrial Precision</h1>
+        <code style="font-size: 11px; color: var(--color-steel);">2.5rem / 40px — Weight: 700</code>
+      </div>
+      <div>
+        <h2>Heading 2 — Human Scale</h2>
+        <code style="font-size: 11px; color: var(--color-steel);">1.75rem / 28px — Weight: 600</code>
+      </div>
+      <div>
+        <h3>Heading 3 — Subtle Wit</h3>
+        <code style="font-size: 11px; color: var(--color-steel);">1.25rem / 20px — Weight: 600</code>
+      </div>
+      <div>
+        <p>Body text — This is what readable paragraphs look like. Clean, comfortable line height, optimized for extended reading. The irony of our name is not lost on us.</p>
+        <code style="font-size: 11px; color: var(--color-steel);">1rem / 16px — Weight: 400 — Leading: 1.6</code>
+      </div>
+      <div>
+        <p class="text-small">Small text — Used for captions, meta information, and fine print that still needs to be legible.</p>
+        <code style="font-size: 11px; color: var(--color-steel);">0.875rem / 14px — Weight: 400</code>
+      </div>
+      <div>
+        <code style="font-family: var(--font-mono);">Mono — const code = 'for technical content';</code>
+        <code style="font-size: 11px; color: var(--color-steel);">0.875rem — JetBrains Mono</code>
+      </div>
+    </div>
+  </section>
+
+  <!-- Buttons -->
+  <section class="demo-section">
+    <h2 class="demo-title">Buttons</h2>
+    <div class="demo-row">
+      <button class="button button--primary">Primary</button>
+      <button class="button button--secondary">Secondary</button>
+      <button class="button button--accent">Accent</button>
+    </div>
+    <div class="demo-row">
+      <button class="button button--primary button--sm">Small</button>
+      <button class="button button--primary button--lg">Large</button>
+    </div>
+    <div class="demo-row">
+      <button class="button button--primary" disabled>Disabled</button>
+    </div>
+  </section>
+
+  <!-- Cards -->
+  <section class="demo-section">
+    <h2 class="demo-title">Cards</h2>
+    <div class="demo-grid">
+      <div class="card">
+        <h3 style="margin-bottom: var(--space-2);">Default Card</h3>
+        <p style="color: var(--color-steel); font-size: var(--text-small);">Simple bordered card for content grouping.</p>
+      </div>
+      <div class="card card--elevated">
+        <h3 style="margin-bottom: var(--space-2);">Elevated Card</h3>
+        <p style="color: var(--color-steel); font-size: var(--text-small);">With subtle shadow for depth.</p>
+      </div>
+      <div class="card card--interactive">
+        <h3 style="margin-bottom: var(--space-2);">Interactive Card</h3>
+        <p style="color: var(--color-steel); font-size: var(--text-small);">Hover to see the lift effect.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Form Elements -->
+  <section class="demo-section">
+    <h2 class="demo-title">Form Elements</h2>
+    <div style="max-width: 400px;">
+      <label class="input-label">Email address</label>
+      <input type="email" class="input" placeholder="you@harmonics.io">
+    </div>
+    <div style="max-width: 400px; margin-top: var(--space-4);">
+      <label class="input-label">Project type</label>
+      <select class="input">
+        <option>Web Application</option>
+        <option>API Development</option>
+        <option>Consulting</option>
+      </select>
+    </div>
+    <div style="max-width: 400px; margin-top: var(--space-4);">
+      <label class="input-label">With error state</label>
+      <input type="email" class="input input--error" value="invalid-email" placeholder="you@harmonics.io">
+    </div>
+  </section>
+
+  <!-- Badges -->
+  <section class="demo-section">
+    <h2 class="demo-title">Badges</h2>
+    <div class="demo-row">
+      <span class="badge badge--default">Default</span>
+      <span class="badge badge--accent">Accent</span>
+      <span class="badge badge--success">Success</span>
+    </div>
+  </section>
+
+  <!-- Avatar -->
+  <section class="demo-section">
+    <h2 class="demo-title">Avatar</h2>
+    <div class="demo-row">
+      <div class="avatar avatar--sm">JD</div>
+      <div class="avatar avatar--md">JD</div>
+      <div class="avatar avatar--lg">JD</div>
+    </div>
+  </section>
+
+  <!-- Dividers -->
+  <section class="demo-section">
+    <h2 class="demo-title">Dividers</h2>
+    <p>Content above</p>
+    <hr class="divider">
+    <p>Content below standard divider</p>
+    <hr class="divider divider--thick">
+    <p>Content below thick divider</p>
+  </section>
+
+  <!-- Code Block -->
+  <section class="demo-section">
+    <h2 class="demo-title">Code</h2>
+    <pre><code>// Harmonics Industries — Sample API
+const harmonics = {
+  build: (requirements) => {
+    return deploy(fullStackApp(requirements));
+  },
+  developer: 1, // Yes, really
+  stack: ['TypeScript', 'React', 'Node.js', 'PostgreSQL']
+};
+
+module.exports = harmonics;</code></pre>
+  </section>
+
+  <!-- Spacing Reference -->
+  <section class="demo-section">
+    <h2 class="demo-title">Spacing Scale</h2>
+    <div style="display: flex; align-items: flex-end; gap: var(--space-2);">
+      <div style="width: 40px; height: var(--space-1); background: var(--color-frequency);"></div>
+      <code style="font-size: 10px;">1 (4px)</code>
+    </div>
+    <div style="display: flex; align-items: flex-end; gap: var(--space-2); margin-top: var(--space-2);">
+      <div style="width: 40px; height: var(--space-2); background: var(--color-frequency);"></div>
+      <code style="font-size: 10px;">2 (8px)</code>
+    </div>
+    <div style="display: flex; align-items: flex-end; gap: var(--space-2); margin-top: var(--space-2);">
+      <div style="width: 40px; height: var(--space-4); background: var(--color-frequency);"></div>
+      <code style="font-size: 10px;">4 (16px)</code>
+    </div>
+    <div style="display: flex; align-items: flex-end; gap: var(--space-2); margin-top: var(--space-2);">
+      <div style="width: 40px; height: var(--space-6); background: var(--color-frequency);"></div>
+      <code style="font-size: 10px;">6 (24px)</code>
+    </div>
+    <div style="display: flex; align-items: flex-end; gap: var(--space-2); margin-top: var(--space-2);">
+      <div style="width: 40px; height: var(--space-8); background: var(--color-frequency);"></div>
+      <code style="font-size: 10px;">8 (32px)</code>
+    </div>
+  </section>
+
+</body>
+</html>
