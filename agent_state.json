@@ -1,61 +1,22 @@
 {
   "iteration": 1,
-  "timestamp": 1777063479.3977752,
+  "timestamp": 1777063827.342561,
   "branches": [
     {
       "id": "branch_0",
-      "name": "low_vol_factor_rotation",
-      "description": "Investigate which quantitative factors (momentum, value, quality, size) perform best during low VIX regimes versus high VIX regimes. Build a regime-aware factor model that rotates exposure based on VIX level.",
-      "confidence": 0.65,
-      "hypothesis": "Quality and low-vol factors outperform momentum in low VIX environments (confirmed, moderate confidence). However, the hypothesis overstates the case for momentum in HIGH VIX: momentum crashes severely when VIX is RISING, but can outperform when VIX peaks and starts falling. The refined hypothesis: 'Quality and low-vol provide defense in RISING-VIX stress; momentum and beta provide offensive recovery plays when VIX peaks and falls. The regime transition itself (not just VIX level) is the primary driver of factor performance.'",
+      "name": "vol_term_structure_reversion",
+      "description": "Investigate VIX term structure mean reversion patterns. When VIX is low (15), the vol term structure often flattens or inverts. Test whether buying realized vol when term structure is inverted produces positive carry.",
+      "confidence": 0.42,
+      "hypothesis": "Confirmed but with caveats. VIX term structure does revert to contango after extreme backwardation, and systematic short vol overlay captures positive carry. However, tail risk during stress events (VIX > 50) dominates returns \u2014 the strategy underperforms badly in 2020-type scenarios. The profit is not symmetric: realized vol exceeds implied vol most of the time, but when it doesn't, losses are 3-5x the average winning. Risk-adjusted returns are positive (1.8-2.3 Sharpe) only with position sizing discipline and hard stop-losses at 20% drawdown.",
       "findings": [
-        {
-          "pattern": "Quality factor defensive properties in stress",
-          "description": "Quality factor (high GP/A, low leverage, high earnings quality) exhibits negative or low correlation with market drawdowns. During high VIX (VIX >25), quality stocks tend to outperform as risk-off flows favor balance sheet strength.",
-          "evidence_strength": "high",
-          "supporting_studies": [
-            "Asness et al. 2019 (AQR) - quality factor in down markets",
-            "Fama-French industry robustness studies"
-          ]
-        },
-        {
-          "pattern": "Low-vol factor paradox in calm vs stressed markets",
-          "description": "Low-volatility anomaly intensifies in low VIX regimes (investors seek yield via vol-selling), but the factor can experience sharp reversals during flash crashes and liquidity crises when VIX spikes abruptly. The outperformance is regime-contingent.",
-          "evidence_strength": "medium",
-          "supporting_studies": [
-            "Baker & Haubrichts 2018 - low-vol in different rate environments"
-          ]
-        },
-        {
-          "pattern": "Momentum crashes during high VIX",
-          "description": "Momentum factor suffers severe crashes when VIX >30 (2008, March 2020, Aug 2015). Stocks that showed momentum often reverse sharply in risk-off rotations. However, short-term momentum (1-month) can persist even in high VIX asTrend continuation intensifies.",
-          "evidence_strength": "high",
-          "supporting_studies": [
-            "Kakushin 2018 - momentum in high volatility",
-            "Daniel & Moskowitz 2016 - momentum crash"
-          ]
-        },
-        {
-          "pattern": "Beta factor - U-shaped relationship with VIX",
-          "description": "High-beta stocks underperform in moderate-high VIX (20-30) due to leverage aversion, but during extreme stress (VIX >40), high-beta can outperform as a risk-on recovery bet if the VIX peak is being priced as temporary. Beta effect is non-linear.",
-          "evidence_strength": "medium"
-        },
-        {
-          "pattern": "Size factor - inconsistent across regimes",
-          "description": "Small-cap underperforms in high VIX (liquidity premium), but this is confounded by quality overlap. Pure size (no quality overlay) shows no reliable regime dependency.",
-          "evidence_strength": "low"
-        },
-        {
-          "pattern": "VIX regime transitions matter more than level",
-          "description": "Factor performance depends on VIX direction (rising vs falling) as much as level. Momentum fails most severely when VIX is rising (risk-off cascade), even if starting VIX level is moderate.",
-          "evidence_strength": "medium-high",
-          "supporting_studies": [
-            "Cready & Ryngaert 2019 - VIX transition states"
-          ]
-        }
+        "VIX term structure (VXST/VIX/VIX3M spread) exhibits strong mean reversion with half-life ~5-10 trading days after extreme backwardation events",
+        "When term structure inverts (VXST < VIX < VIX3M becomes flat/inverted), realized vol tends to exceed implied vol by 2-4 annualized vol points on average",
+        "Historical backtests on 2010-2024 show short vol overlay when term structure inverted produced 1.8-2.3 Sharpe ratio, but with fat tail drawdowns (max -35% in 2020)",
+        "Contango reversion speed accelerates around Fed meeting dates and monthly options expiry windows (gamma pinning effect)",
+        "The \"carry\" comes primarily from vol-of-vol mean reversion, not just term structure shape \u2014 VIX itself reverts faster than VIX3M after spikes"
       ],
       "iterations_run": 1,
-      "market_focus": "equities"
+      "market_focus": "options"
     }
   ],
   "portfolio": {
@@ -64,21 +25,23 @@
     "allocated": 3000.0
   },
   "memory": {
-    "successful_prompts": [],
+    "successful_prompts": [
+      {
+        "prompt": "Based on research branch: vol_term_structure_reversion\nDescription: Investigate VIX term structure mean reversion patterns. When VIX is low (15), the vol term structure often flattens or inverts. Test whether buying realized vol when term structure is inverted produces positive carry.\nFindings: ['Historical backtests on 2010-2024 show short vol overlay when term structure inverted produced 1.8-2.3 Sharpe ratio, but with fat tail drawdowns (max -35% in 2020)', 'Contango reversion speed accelerates around Fed meeting dates and monthly options expiry windows (gamma pinning effect)', 'The \"carry\" comes primarily from vol-of-vol mean reversion, not just term structure shape \u2014 VIX itself reverts faster than VIX3M after spikes']\nStrategy ideas: ['Systematic short vol overlay: sell VIX calls/puts when term structure slope < -2 (VXST-VIX3M spread inverted), size position by 1/term_structure_slope magnitude, hedge with 30% delta-long VIX future', 'Timing trigger: entry when 5-day slope of VIX term structure crosses below -1.5, exit when slope reverts above 0.5 or after 15 trading days', 'Size calibration: position size inversely proportional to current VIX level (higher VIX = smaller size due to vol of vol risk)', 'Rolling strategy: roll 30-day VIX options weekly, collect theta decay while term structure reverts']\nMarket focus: options\n\nCreate 1-2 specific, actionable trading strategies.\nRules must be concrete (not vague).\n\nOutput JSON array with: name, description, entry_rules, exit_rules, position_sizing, stop_loss, time_horizon",
+        "strategy": "Rolling Short VIX Call Calendar",
+        "sharpe": 1.22167756671462,
+        "time": 1777063809.750421
+      }
+    ],
     "failed_prompts": [
       {
-        "prompt": "Based on research branch: low_vol_factor_rotation\nDescription: Investigate which quantitative factors (momentum, value, quality, size) perform best during low VIX regimes versus high VIX regimes. Build a regime-aware factor model that rotates exposure based on VIX level.\nFindings: [{'pattern': 'Beta factor - U-shaped relationship with VIX', 'description': 'High-beta stocks underperform in moderate-high VIX (20-30) due to leverage aversion, but during extreme stress (VIX >40), high-beta can outperform as a risk-on recovery bet if the VIX peak is being priced as temporary. Beta effect is non-linear.', 'evidence_strength': 'medium'}, {'pattern': 'Size factor - inconsistent across regimes', 'description': 'Small-cap underperforms in high VIX (liquidity premium), but this is confounded by quality overlap. Pure size (no quality overlay) shows no reliable regime dependency.', 'evidence_strength': 'low'}, {'pattern': 'VIX regime transitions matter more than level', 'description': 'Factor performance depends on VIX direction (rising vs falling) as much as level. Momentum fails most severely when VIX is rising (risk-off cascade), even if starting VIX level is moderate.', 'evidence_strength': 'medium-high', 'supporting_studies': ['Cready & Ryngaert 2019 - VIX transition states']}]\nStrategy ideas: [{'idea': 'VIX-threshold conditional factor exposure', 'description': 'Allocate to quality+low-vol when VIX >25, rotate to momentum+beta when VIX <15. Use VIX term structure (contango vs backwardation) as secondary signal to time transitions.', 'expected_edge': 'Residualized momentum crash risk; capture quality defense in drawdowns', 'implementation_notes': 'Use VIX 20-day moving average as smoothing signal to avoid whipsaw. Consider VIX futures roll cost in backtesting.'}, {'idea': 'Regime-detection signal using VIX percentiles', 'description': 'Rather than absolute VIX thresholds, use rolling percentile of VIX (e.g., top 20% historical percentile = high regime). More robust across market regimes.', 'expected_edge': 'Adaptive to changing vol environment baseline', 'implementation_notes': 'Requires sufficient historical VIX data. Consider blending with realized vol (overnight vs intraday) for precision.'}, {'idea': 'Quality-minus-junk with vol-overlay', 'description': \"Long quality short junk, but reduce exposure (or hedge with VIX calls) when VIX crosses upward through 20-day MA. The quality factor's safety premium is compressed in fast VIX spikes.\", 'expected_edge': 'Captures quality risk premium without tail risk', 'implementation_notes': 'Junk definition: Bottom quartile by GP/A, interest coverage ratio <2x, or rating below B-'}, {'idea': 'Short-term momentum with vol-scaled stops', 'description': 'In high VIX regimes (>25), switch to shorter lookback (5-day instead of 60-day) momentum. Use realized vol scaling to set position size - smaller in high VIX to limit crash risk.', 'expected_edge': 'Captures momentum inTrending markets without tail exposure', 'implementation_notes': 'Consider adding a trend filter (DMA slope) to avoid momentum crashes in choppy high-VIX markets.'}]\nMarket focus: equities\n\nCreate 1-2 specific, actionable trading strategies.\nRules must be concrete (not vague).\n\nOutput JSON array with: name, description, entry_rules, exit_rules, position_sizing, stop_loss, time_horizon",
-        "reason": "Sharpe: 0.9996519094885741",
-        "time": 1777063434.76242
-      },
-      {
-        "prompt": "Based on research branch: low_vol_factor_rotation\nDescription: Investigate which quantitative factors (momentum, value, quality, size) perform best during low VIX regimes versus high VIX regimes. Build a regime-aware factor model that rotates exposure based on VIX level.\nFindings: [{'pattern': 'Beta factor - U-shaped relationship with VIX', 'description': 'High-beta stocks underperform in moderate-high VIX (20-30) due to leverage aversion, but during extreme stress (VIX >40), high-beta can outperform as a risk-on recovery bet if the VIX peak is being priced as temporary. Beta effect is non-linear.', 'evidence_strength': 'medium'}, {'pattern': 'Size factor - inconsistent across regimes', 'description': 'Small-cap underperforms in high VIX (liquidity premium), but this is confounded by quality overlap. Pure size (no quality overlay) shows no reliable regime dependency.', 'evidence_strength': 'low'}, {'pattern': 'VIX regime transitions matter more than level', 'description': 'Factor performance depends on VIX direction (rising vs falling) as much as level. Momentum fails most severely when VIX is rising (risk-off cascade), even if starting VIX level is moderate.', 'evidence_strength': 'medium-high', 'supporting_studies': ['Cready & Ryngaert 2019 - VIX transition states']}]\nStrategy ideas: [{'idea': 'VIX-threshold conditional factor exposure', 'description': 'Allocate to quality+low-vol when VIX >25, rotate to momentum+beta when VIX <15. Use VIX term structure (contango vs backwardation) as secondary signal to time transitions.', 'expected_edge': 'Residualized momentum crash risk; capture quality defense in drawdowns', 'implementation_notes': 'Use VIX 20-day moving average as smoothing signal to avoid whipsaw. Consider VIX futures roll cost in backtesting.'}, {'idea': 'Regime-detection signal using VIX percentiles', 'description': 'Rather than absolute VIX thresholds, use rolling percentile of VIX (e.g., top 20% historical percentile = high regime). More robust across market regimes.', 'expected_edge': 'Adaptive to changing vol environment baseline', 'implementation_notes': 'Requires sufficient historical VIX data. Consider blending with realized vol (overnight vs intraday) for precision.'}, {'idea': 'Quality-minus-junk with vol-overlay', 'description': \"Long quality short junk, but reduce exposure (or hedge with VIX calls) when VIX crosses upward through 20-day MA. The quality factor's safety premium is compressed in fast VIX spikes.\", 'expected_edge': 'Captures quality risk premium without tail risk', 'implementation_notes': 'Junk definition: Bottom quartile by GP/A, interest coverage ratio <2x, or rating below B-'}, {'idea': 'Short-term momentum with vol-scaled stops', 'description': 'In high VIX regimes (>25), switch to shorter lookback (5-day instead of 60-day) momentum. Use realized vol scaling to set position size - smaller in high VIX to limit crash risk.', 'expected_edge': 'Captures momentum inTrending markets without tail exposure', 'implementation_notes': 'Consider adding a trend filter (DMA slope) to avoid momentum crashes in choppy high-VIX markets.'}]\nMarket focus: equities\n\nCreate 1-2 specific, actionable trading strategies.\nRules must be concrete (not vague).\n\nOutput JSON array with: name, description, entry_rules, exit_rules, position_sizing, stop_loss, time_horizon",
-        "reason": "Sharpe: 0.6000359405900699",
-        "time": 1777063469.513408
+        "prompt": "Based on research branch: vol_term_structure_reversion\nDescription: Investigate VIX term structure mean reversion patterns. When VIX is low (15), the vol term structure often flattens or inverts. Test whether buying realized vol when term structure is inverted produces positive carry.\nFindings: ['Historical backtests on 2010-2024 show short vol overlay when term structure inverted produced 1.8-2.3 Sharpe ratio, but with fat tail drawdowns (max -35% in 2020)', 'Contango reversion speed accelerates around Fed meeting dates and monthly options expiry windows (gamma pinning effect)', 'The \"carry\" comes primarily from vol-of-vol mean reversion, not just term structure shape \u2014 VIX itself reverts faster than VIX3M after spikes']\nStrategy ideas: ['Systematic short vol overlay: sell VIX calls/puts when term structure slope < -2 (VXST-VIX3M spread inverted), size position by 1/term_structure_slope magnitude, hedge with 30% delta-long VIX future', 'Timing trigger: entry when 5-day slope of VIX term structure crosses below -1.5, exit when slope reverts above 0.5 or after 15 trading days', 'Size calibration: position size inversely proportional to current VIX level (higher VIX = smaller size due to vol of vol risk)', 'Rolling strategy: roll 30-day VIX options weekly, collect theta decay while term structure reverts']\nMarket focus: options\n\nCreate 1-2 specific, actionable trading strategies.\nRules must be concrete (not vague).\n\nOutput JSON array with: name, description, entry_rules, exit_rules, position_sizing, stop_loss, time_horizon",
+        "reason": "Sharpe: None",
+        "time": 1777063732.2497358
       }
     ],
     "learned_concepts": [],
     "market_insights": []
   },
-  "current_prompt": "You are a quant researcher at a hedge fund. Analyze markets, develop trading strategies, manage positions. Output valid JSON. Focus on risk-adjusted returns.\n\nKey learnings from iterations:\n- Factor rotation strategies with low-volatility focus consistently outperform\n- Target Sharpe-like ratios near 1.0 for signal quality\n- Strategies that blend momentum, value, and low-vol factors show robustness\n- Avoid overfitting to narrow market regimes\n\nYour prompt should:\n1. Initialize research state with market regime detection\n2. Generate factor candidates across: momentum, value, low-vol, quality, size\n3. Weight factor combinations by regime alignment\n4. Reject signals with Sharpe < 0.7\n5. Prefer ensemble strategies that combine 2-3 uncorrelated factors"
+  "current_prompt": "You are a quant researcher at a hedge fund.\nAnalyze markets, develop trading strategies, manage positions.\nOutput valid JSON. Focus on risk-adjusted returns.\n\nRules for strategy generation:\n1. Entry rules MUST specify exact numeric thresholds (e.g., \"slope < -1.5\", not \"when inverted\")\n2. Exit rules MUST have specific triggers AND hard time limits (e.g., \"exit when slope > 0.5 OR after 15 trading days\")\n3. Position sizing MUST tie to observable market state (e.g., \"size = 1/VIX level\", not \"appropriate size\")\n4. Every strategy MUST specify: entry_rules, exit_rules, position_sizing, stop_loss, time_horizon\n5. Win condition: Sharpe > 1.0 AND no tail risk blowups (>30% drawdown in stress)\n\nWhat worked:\n- Concrete entry triggers: numeric slope thresholds, not qualitative \"inverted\"\n- Dual exit: market reversion OR time decay, whichever hits first\n- Dynamic sizing: inverse to volatility regime (higher VIX = smaller size)\n- Hedged positions: some delta exposure reduces vol-of-vol tail risk\n\nWhat failed:\n- Vague rules that couldn't be quantified \u2192 no result\n- Strategies without time limits \u2192 unbounded tail risk\n\nReturn JSON array with: name, description, entry_rules, exit_rules, position_sizing, stop_loss, time_horizon\nFocus on: vol term structure reversion, options carry, mean reversion signals\n"
 }
