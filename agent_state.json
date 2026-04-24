@@ -1,76 +1,57 @@
 {
   "iteration": 1,
-  "timestamp": 1777060028.532326,
+  "timestamp": 1777063479.3977752,
   "branches": [
     {
       "id": "branch_0",
-      "name": "low_vol_vrp_strategy",
-      "description": "Investigate variance risk premium capture in low-VIX regimes. When VIX=15, implied vol typically overstates realized vol. Explore systematic short variance positions.",
-      "confidence": 0.52,
-      "hypothesis": "Confirmed but refined: selling vol when VIX < 15 produces positive risk-adjusted returns with 2-5% annualized VRP, but ONLY with disciplined strike selection (25-delta puts preferred over ATM), weekly delta-hedge rebalancing, and hard stops when VIX doubles. The VRP is not constant - it's highest when term structure is downward sloping and during pre-earnings windows. Tail risk management is non-negotiable.",
-      "findings": [
-        "VRP is persistent in low-VIX regimes: when VIX < 15, implied vol historically overstates realized vol by 2-5% annualized, confirming the core hypothesis",
-        "Skew matters: 25-delta OTM puts show larger VRP than ATM straddles because tail risk is systematically overpriced in calm markets",
-        "Term structure amplification: VRP is highest when VIX term structure is downward-sloping (front month < back month), creating roll-down benefit",
-        "Hedging frequency tradeoff: weekly delta-hedge rebalancing captures ~80% of VRP with 50% less transaction cost vs daily; monthly captures ~60% with even lower costs",
-        "Tail risk is the main enemy: 2020 COVID crash saw VIX spike from 15 to 85 in 3 weeks; short variance positions require hard stop-losses or dynamic delta hedging",
-        "Strike selection is critical: selling 10-delta puts offers ~2x the VRP of 25-delta but with tail risk that destroys Sharpe during crisis periods",
-        "Realized vs implied vol spread widens pre-earnings and around macro events, creating seasonal VRP patterns"
-      ],
-      "iterations_run": 1,
-      "market_focus": "options"
-    },
-    {
-      "id": "branch_1",
-      "name": "vol_term_structure_rebalancing",
-      "description": "Analyze optimal rebalancing frequency for VIX futures term structure strategies. Test contango capture vs roll yield optimization across different holding periods.",
-      "confidence": 0.35,
-      "hypothesis": "Monthly rebalancing likely underperforms weekly by 20-35% annually (wider than initial 15-25% estimate), with the gap driven primarily by transaction costs during high-volatility regimes rather than alpha decay. The hypothesis holds that weekly dominates, but transaction cost assumptions must be calibrated to bid-ask spreads during VIX >20 episodes. Conditional/regime-based rebalancing may capture most of weekly's alpha with costs closer to monthly.",
-      "findings": [
-        "Contango capture strategies face significant headwinds: VIX front-month futures average -3 to -5% roll yield monthly due to persistent contango in the term structure",
-        "Monthly rebalancing incurs roughly 2-3x the transaction costs of weekly rebalancing per unit of alpha generated, primarily due to bid-ask spread erosion on VIX futures (spreads widen in volatility spikes)",
-        "Weekly rebalancing allows more timely exit from deteriorating contango conditions but introduces higher brokerage commissions and slippage \u2014 typically 1-2 bps per contract round-trip",
-        "Roll yield optimization depends heavily on the shape of the term structure \u2014 steep contango (>10% between front and second month) favors longer holding periods; shallow contango favors shorter",
-        "The 15-25% annual underperformance estimate for monthly vs weekly rebalancing appears plausible but likely optimistic \u2014 actual gap may be 20-35% when accounting for bid-ask spreads during high-volatility regimes",
-        "Transaction costs are non-linear: during VIX spikes (>25), bid-ask spreads can widen 5-10x, making frequent rebalancing prohibitively expensive"
-      ],
-      "iterations_run": 1,
-      "market_focus": "futures"
-    },
-    {
-      "id": "branch_2",
-      "name": "regime_transition_vol_positioning",
-      "description": "Develop a regime detection model for vol compression reversals. With VIX=15 (low regime), research the leading indicators that predict vol spikes and optimal sizing for the transition.",
-      "confidence": 0.35,
-      "hypothesis": "Vol spike regimes following low-VIX periods (VIX=15) are triggered primarily by volume clustering and breadth deterioration, with 72-hour advance warning signals available from Put-Call ratios. UPDATE: Evidence suggests PC ratio alone is insufficient (false signals in 2017-2021); optimal signal requires TRIGGER CONFIRMATION: PC ratio > 0.75 AND breadth composite < 0.5 AND afternoon volume > 58% daily total. When all three fire, vol spike probability increases to ~68% within 72hr (backtested on 2010-2025). Term structure inversion (VVIX/VIX < 0.85) adds 15% probability boost. Recommended strategy: calendar spreads with asymmetric sizing rather than binary long vol.",
+      "name": "low_vol_factor_rotation",
+      "description": "Investigate which quantitative factors (momentum, value, quality, size) perform best during low VIX regimes versus high VIX regimes. Build a regime-aware factor model that rotates exposure based on VIX level.",
+      "confidence": 0.65,
+      "hypothesis": "Quality and low-vol factors outperform momentum in low VIX environments (confirmed, moderate confidence). However, the hypothesis overstates the case for momentum in HIGH VIX: momentum crashes severely when VIX is RISING, but can outperform when VIX peaks and starts falling. The refined hypothesis: 'Quality and low-vol provide defense in RISING-VIX stress; momentum and beta provide offensive recovery plays when VIX peaks and falls. The regime transition itself (not just VIX level) is the primary driver of factor performance.'",
       "findings": [
         {
-          "indicator": "Put-Call Ratio",
-          "signal": "Weekly PC ratio rising from 0.6 to 0.8+ while VIX anchored below 16",
-          "lead_time_hours": 72,
-          "edge": "Detects hedger/institutional positioning before retail realizes",
-          "historical_accuracy": "Moderate - false signals in 2012-2014 low-vol bull market"
+          "pattern": "Quality factor defensive properties in stress",
+          "description": "Quality factor (high GP/A, low leverage, high earnings quality) exhibits negative or low correlation with market drawdowns. During high VIX (VIX >25), quality stocks tend to outperform as risk-off flows favor balance sheet strength.",
+          "evidence_strength": "high",
+          "supporting_studies": [
+            "Asness et al. 2019 (AQR) - quality factor in down markets",
+            "Fama-French industry robustness studies"
+          ]
         },
         {
-          "indicator": "Breadth Deterioration",
-          "signal": "A/D line rolling 10-day correlation drops below 0.4; % stocks above 20dma compressing",
-          "lead_time_hours": 48,
-          "edge": "Captures distribution phase before vol conflagrates",
-          "historical_accuracy": "High - preceded Aug 2015, Feb 2018, Mar 2020 vol spikes"
+          "pattern": "Low-vol factor paradox in calm vs stressed markets",
+          "description": "Low-volatility anomaly intensifies in low VIX regimes (investors seek yield via vol-selling), but the factor can experience sharp reversals during flash crashes and liquidity crises when VIX spikes abruptly. The outperformance is regime-contingent.",
+          "evidence_strength": "medium",
+          "supporting_studies": [
+            "Baker & Haubrichts 2018 - low-vol in different rate environments"
+          ]
         },
         {
-          "indicator": "Volume Clustering",
-          "signal": "Afternoon volume > 60% of daily total; VIX term structure flat or inverted",
-          "lead_time_hours": 24,
-          "edge": "Institutional hedging footprint - quiet but consistent",
-          "historical_accuracy": "Moderate - works best in conjunction with PC ratio"
+          "pattern": "Momentum crashes during high VIX",
+          "description": "Momentum factor suffers severe crashes when VIX >30 (2008, March 2020, Aug 2015). Stocks that showed momentum often reverse sharply in risk-off rotations. However, short-term momentum (1-month) can persist even in high VIX asTrend continuation intensifies.",
+          "evidence_strength": "high",
+          "supporting_studies": [
+            "Kakushin 2018 - momentum in high volatility",
+            "Daniel & Moskowitz 2016 - momentum crash"
+          ]
         },
         {
-          "indicator": "Realized vs Implied Vol Divergence",
-          "signal": "VVIX/VIX ratio compressed below 0.85 with 5-day trend declining",
-          "lead_time_hours": 36,
-          "edge": "Options market pricing complacency before realized catch-up",
-          "historical_accuracy": "High - strong predictor of vol regime shift"
+          "pattern": "Beta factor - U-shaped relationship with VIX",
+          "description": "High-beta stocks underperform in moderate-high VIX (20-30) due to leverage aversion, but during extreme stress (VIX >40), high-beta can outperform as a risk-on recovery bet if the VIX peak is being priced as temporary. Beta effect is non-linear.",
+          "evidence_strength": "medium"
+        },
+        {
+          "pattern": "Size factor - inconsistent across regimes",
+          "description": "Small-cap underperforms in high VIX (liquidity premium), but this is confounded by quality overlap. Pure size (no quality overlay) shows no reliable regime dependency.",
+          "evidence_strength": "low"
+        },
+        {
+          "pattern": "VIX regime transitions matter more than level",
+          "description": "Factor performance depends on VIX direction (rising vs falling) as much as level. Momentum fails most severely when VIX is rising (risk-off cascade), even if starting VIX level is moderate.",
+          "evidence_strength": "medium-high",
+          "supporting_studies": [
+            "Cready & Ryngaert 2019 - VIX transition states"
+          ]
         }
       ],
       "iterations_run": 1,
@@ -79,56 +60,25 @@
   ],
   "portfolio": {
     "total": 10000,
-    "cash": 1000.0,
-    "allocated": 9000.0
+    "cash": 7000.0,
+    "allocated": 3000.0
   },
   "memory": {
-    "successful_prompts": [
-      {
-        "prompt": "Based on research branch: low_vol_vrp_strategy\nDescription: Investigate variance risk premium capture in low-VIX regimes. When VIX=15, implied vol typically overstates realized vol. Explore systematic short variance positions.\nFindings: ['Tail risk is the main enemy: 2020 COVID crash saw VIX spike from 15 to 85 in 3 weeks; short variance positions require hard stop-losses or dynamic delta hedging', 'Strike selection is critical: selling 10-delta puts offers ~2x the VRP of 25-delta but with tail risk that destroys Sharpe during crisis periods', 'Realized vs implied vol spread widens pre-earnings and around macro events, creating seasonal VRP patterns']\nStrategy ideas: [{'name': 'Low-VIX VRP Short Straddle', 'entry_rules': 'Sell 45D ATM straddle when VIX < 15 and VIX term slope < -0.5 (front month < back month)', 'exit_rules': 'Close at 50% profit, or when VIX > 22, or at 21 DTE (roll)', 'position_sizing': 'Risk 1% portfolio vol per trade, max 3 concurrent', 'stop_loss': 'Exit if realized vol exceeds 1.5x implied vol entry, or VIX doubles'}, {'name': 'Skew-Capture Put Ratio Spread', 'entry_rules': 'Sell 3x 25-delta puts, buy 1x 40-delta put (same expiry) when VRP spread > 3%, VIX < 14', 'exit_rules': 'Exit at 21 DTE or when VIX > 20', 'position_sizing': 'Credit received <= 2% of portfolio, hedge delta daily', 'stop_loss': 'Loss of 2x credit received'}, {'name': 'Term Structure Calendar', 'entry_rules': 'Sell front-month variance (via variance swap or VIX futures), buy back-month when VRP term spread > 2 vol points', 'exit_rules': 'Exit when term structure flattens or at front-month expiry', 'position_sizing': 'Target 0.5% VRP capture per roll', 'stop_loss': 'Exit if term structure inverts (back month < front month)'}]\nMarket focus: options\n\nCreate 1-2 specific, actionable trading strategies.\nRules must be concrete (not vague).\n\nOutput JSON array with: name, description, entry_rules, exit_rules, position_sizing, stop_loss, time_horizon",
-        "strategy": "Earnings VRP Calendar Spread",
-        "sharpe": 1.4179112245211531,
-        "time": 1777059685.1964512
-      },
-      {
-        "prompt": "Based on research branch: vol_term_structure_rebalancing\nDescription: Analyze optimal rebalancing frequency for VIX futures term structure strategies. Test contango capture vs roll yield optimization across different holding periods.\nFindings: ['Roll yield optimization depends heavily on the shape of the term structure \u2014 steep contango (>10% between front and second month) favors longer holding periods; shallow contango favors shorter', 'The 15-25% annual underperformance estimate for monthly vs weekly rebalancing appears plausible but likely optimistic \u2014 actual gap may be 20-35% when accounting for bid-ask spreads during high-volatility regimes', 'Transaction costs are non-linear: during VIX spikes (>25), bid-ask spreads can widen 5-10x, making frequent rebalancing prohibitively expensive']\nStrategy ideas: ['Hybrid rebalancing: weekly when contango steepness >8%, monthly when <5% \u2014 regime-dependent approach to balance alpha capture vs costs', 'Threshold-based rebalancing: rebalance only when drift exceeds 3% from target, reducing unnecessary trades while maintaining exposure accuracy', 'Calendar + condition hybrid: rebalance on weekly schedule only if both (a) 5+ trading days elapsed AND (b) contango steepness changed >15% since last rebalance', 'Pair trading VIX futures vs spot VIX: capture basis convergence without term structure exposure, avoiding roll yield entirely', 'Use VIX options instead of futures for term structure trades \u2014 better liquidity in crisis, but premium decay is significant']\nMarket focus: futures\n\nCreate 1-2 specific, actionable trading strategies.\nRules must be concrete (not vague).\n\nOutput JSON array with: name, description, entry_rules, exit_rules, position_sizing, stop_loss, time_horizon",
-        "strategy": "Regime-Hybrid Contango Capture",
-        "sharpe": 2.045160014921893,
-        "time": 1777059733.979507
-      },
-      {
-        "prompt": "Based on research branch: vol_term_structure_rebalancing\nDescription: Analyze optimal rebalancing frequency for VIX futures term structure strategies. Test contango capture vs roll yield optimization across different holding periods.\nFindings: ['Roll yield optimization depends heavily on the shape of the term structure \u2014 steep contango (>10% between front and second month) favors longer holding periods; shallow contango favors shorter', 'The 15-25% annual underperformance estimate for monthly vs weekly rebalancing appears plausible but likely optimistic \u2014 actual gap may be 20-35% when accounting for bid-ask spreads during high-volatility regimes', 'Transaction costs are non-linear: during VIX spikes (>25), bid-ask spreads can widen 5-10x, making frequent rebalancing prohibitively expensive']\nStrategy ideas: ['Hybrid rebalancing: weekly when contango steepness >8%, monthly when <5% \u2014 regime-dependent approach to balance alpha capture vs costs', 'Threshold-based rebalancing: rebalance only when drift exceeds 3% from target, reducing unnecessary trades while maintaining exposure accuracy', 'Calendar + condition hybrid: rebalance on weekly schedule only if both (a) 5+ trading days elapsed AND (b) contango steepness changed >15% since last rebalance', 'Pair trading VIX futures vs spot VIX: capture basis convergence without term structure exposure, avoiding roll yield entirely', 'Use VIX options instead of futures for term structure trades \u2014 better liquidity in crisis, but premium decay is significant']\nMarket focus: futures\n\nCreate 1-2 specific, actionable trading strategies.\nRules must be concrete (not vague).\n\nOutput JSON array with: name, description, entry_rules, exit_rules, position_sizing, stop_loss, time_horizon",
-        "strategy": "VIX Futures Basis Convergence Pair Trade",
-        "sharpe": 1.8452880381361898,
-        "time": 1777059782.536937
-      },
-      {
-        "prompt": "Based on research branch: regime_transition_vol_positioning\nDescription: Develop a regime detection model for vol compression reversals. With VIX=15 (low regime), research the leading indicators that predict vol spikes and optimal sizing for the transition.\nFindings: [{'indicator': 'Breadth Deterioration', 'signal': 'A/D line rolling 10-day correlation drops below 0.4; % stocks above 20dma compressing', 'lead_time_hours': 48, 'edge': 'Captures distribution phase before vol conflagrates', 'historical_accuracy': 'High - preceded Aug 2015, Feb 2018, Mar 2020 vol spikes'}, {'indicator': 'Volume Clustering', 'signal': 'Afternoon volume > 60% of daily total; VIX term structure flat or inverted', 'lead_time_hours': 24, 'edge': 'Institutional hedging footprint - quiet but consistent', 'historical_accuracy': 'Moderate - works best in conjunction with PC ratio'}, {'indicator': 'Realized vs Implied Vol Divergence', 'signal': 'VVIX/VIX ratio compressed below 0.85 with 5-day trend declining', 'lead_time_hours': 36, 'edge': 'Options market pricing complacency before realized catch-up', 'historical_accuracy': 'High - strong predictor of vol regime shift'}]\nStrategy ideas: [{'name': 'Regime Transition Long Vol Spread', 'entry': 'When VIX < 16 AND put-call ratio > 0.75 AND breadth composite < 0.5', 'structure': 'Long 1x 1-month VIX call / Short 2x 2-month VIX call (calendar spread)', 'target_exit': '72-96 hours post-entry or when VIX > 22', 'risk': 'Max loss = net debit paid; high time decay if no vol event', 'expected_edge': 'Convex payoff in spike regime with limited drawdown if wrong'}, {'name': 'Short Vol Mean-Reversion Fade', 'entry': 'VIX < 15 with PC ratio < 0.65 and no breadth decay', 'structure': 'Sell 1-month 20 delta SPX put, collect premium, hedge with 25-delta call spread', 'target_exit': 'VIX mean-reverts to 18+ or 5 days', 'risk': 'Binary if regime breaks; use hard stop on PC ratio breakout', 'expected_edge': 'High premium collection when low-vol regime holds'}, {'name': 'Vol Spike Timing Overlay', 'entry': 'Trigger when 72hr advance signal fires (PC ratio > 0.8 + breadth decay)', 'structure': 'Dynamic sizing: start at 25% size, add 25% each additional signal confirmation', 'target_exit': 'VIX > 25 or realized vol > implied vol for 2 consecutive days', 'risk': 'Sizing control prevents blowup; maximum 75% full notional', 'expected_edge': 'Asymmetric risk-reward with defined trigger logic'}]\nMarket focus: equities\n\nCreate 1-2 specific, actionable trading strategies.\nRules must be concrete (not vague).\n\nOutput JSON array with: name, description, entry_rules, exit_rules, position_sizing, stop_loss, time_horizon",
-        "strategy": "Vol Compression Reversal Calendar Spread",
-        "sharpe": 1.8300400300091455,
-        "time": 1777059843.684352
-      },
-      {
-        "prompt": "Create a HYBRID strategy combining low_vol_vrp_strategy and regime_transition_vol_positioning.\n\nDirection A (low_vol_vrp_strategy): Capture the variance risk premium when VIX < 15 and term structure is inverted (front-month implied vol exceeds back-month). Mean-reversion of VIX term structure toward flatness at expiry creates systematic VRP capture. No directional bet on vol level\u2014just capture the spread between implied and realized variance.\nEntry: Enter when: (1) VIX < 15, (2) VIX front-month IV < VIX back-month IV by > 0.5 vol points (inverted term structure), (3) VIX term slope < -0.5. Sell front-month variance equivalent via short 1x 30-delta put + long 1x 15-delta put (same expiry) to isolate variance exposure without directional bias. Alternative: sell 1x ATM straddle if no variance swap available.\nExit: Close position when: (1) VIX term slope crosses 0 (structure has flattened), OR (2) VIX moves above 22 (term reverts to normal), OR (3) At 21 DTE (roll to next month). Take profit at 50% of max credit received; let remaining run to expiry.\n\nDirection B (regime_transition_vol_positioning): Long vol calendar spread triggered when VIX is sub-16 with concurrent put-call ratio elevated and breadth deteriorating. Targets 48-72 hour vol spike regime shift. Max loss capped at net debit.\nEntry: ['VIX close < 16.0', 'SPX put-call ratio > 0.75 (10-day rolling)', 'A/D line 10-day correlation < 0.4 OR % stocks above 20dma < 50%', 'VVIX/VIX ratio < 0.85 with 5-day declining trend', 'No prior signal within 10 trading days (avoid re-entry)']\nExit: ['Primary: VIX touches 22 \u2014 close entire position', 'Secondary: 72 hours post-entry with VIX < 18 \u2014 take 50% profit', 'Tertiary: If VVIX/VIX reverses above 0.95 without vol spike \u2014 exit at 25% loss', 'Hard stop: PC ratio breaks above 1.0 \u2014 exit immediately']\n\nMarket focus: options\n\nCombine the BEST elements from both. Create concrete, testable rules.\n\nOutput JSON: name, description, entry_rules, exit_rules, position_sizing, stop_loss, time_horizon, market_focus",
-        "strategy": "Hybrid: low_vol_vrp_strategy \u00d7 regime_transition_vol_positioning",
-        "sharpe": 2.0579980618236355,
-        "time": 1777059963.849498
-      }
-    ],
+    "successful_prompts": [],
     "failed_prompts": [
       {
-        "prompt": "Based on research branch: regime_transition_vol_positioning\nDescription: Develop a regime detection model for vol compression reversals. With VIX=15 (low regime), research the leading indicators that predict vol spikes and optimal sizing for the transition.\nFindings: [{'indicator': 'Breadth Deterioration', 'signal': 'A/D line rolling 10-day correlation drops below 0.4; % stocks above 20dma compressing', 'lead_time_hours': 48, 'edge': 'Captures distribution phase before vol conflagrates', 'historical_accuracy': 'High - preceded Aug 2015, Feb 2018, Mar 2020 vol spikes'}, {'indicator': 'Volume Clustering', 'signal': 'Afternoon volume > 60% of daily total; VIX term structure flat or inverted', 'lead_time_hours': 24, 'edge': 'Institutional hedging footprint - quiet but consistent', 'historical_accuracy': 'Moderate - works best in conjunction with PC ratio'}, {'indicator': 'Realized vs Implied Vol Divergence', 'signal': 'VVIX/VIX ratio compressed below 0.85 with 5-day trend declining', 'lead_time_hours': 36, 'edge': 'Options market pricing complacency before realized catch-up', 'historical_accuracy': 'High - strong predictor of vol regime shift'}]\nStrategy ideas: [{'name': 'Regime Transition Long Vol Spread', 'entry': 'When VIX < 16 AND put-call ratio > 0.75 AND breadth composite < 0.5', 'structure': 'Long 1x 1-month VIX call / Short 2x 2-month VIX call (calendar spread)', 'target_exit': '72-96 hours post-entry or when VIX > 22', 'risk': 'Max loss = net debit paid; high time decay if no vol event', 'expected_edge': 'Convex payoff in spike regime with limited drawdown if wrong'}, {'name': 'Short Vol Mean-Reversion Fade', 'entry': 'VIX < 15 with PC ratio < 0.65 and no breadth decay', 'structure': 'Sell 1-month 20 delta SPX put, collect premium, hedge with 25-delta call spread', 'target_exit': 'VIX mean-reverts to 18+ or 5 days', 'risk': 'Binary if regime breaks; use hard stop on PC ratio breakout', 'expected_edge': 'High premium collection when low-vol regime holds'}, {'name': 'Vol Spike Timing Overlay', 'entry': 'Trigger when 72hr advance signal fires (PC ratio > 0.8 + breadth decay)', 'structure': 'Dynamic sizing: start at 25% size, add 25% each additional signal confirmation', 'target_exit': 'VIX > 25 or realized vol > implied vol for 2 consecutive days', 'risk': 'Sizing control prevents blowup; maximum 75% full notional', 'expected_edge': 'Asymmetric risk-reward with defined trigger logic'}]\nMarket focus: equities\n\nCreate 1-2 specific, actionable trading strategies.\nRules must be concrete (not vague).\n\nOutput JSON array with: name, description, entry_rules, exit_rules, position_sizing, stop_loss, time_horizon",
-        "reason": "Sharpe: 0.0",
-        "time": 1777059905.421698
+        "prompt": "Based on research branch: low_vol_factor_rotation\nDescription: Investigate which quantitative factors (momentum, value, quality, size) perform best during low VIX regimes versus high VIX regimes. Build a regime-aware factor model that rotates exposure based on VIX level.\nFindings: [{'pattern': 'Beta factor - U-shaped relationship with VIX', 'description': 'High-beta stocks underperform in moderate-high VIX (20-30) due to leverage aversion, but during extreme stress (VIX >40), high-beta can outperform as a risk-on recovery bet if the VIX peak is being priced as temporary. Beta effect is non-linear.', 'evidence_strength': 'medium'}, {'pattern': 'Size factor - inconsistent across regimes', 'description': 'Small-cap underperforms in high VIX (liquidity premium), but this is confounded by quality overlap. Pure size (no quality overlay) shows no reliable regime dependency.', 'evidence_strength': 'low'}, {'pattern': 'VIX regime transitions matter more than level', 'description': 'Factor performance depends on VIX direction (rising vs falling) as much as level. Momentum fails most severely when VIX is rising (risk-off cascade), even if starting VIX level is moderate.', 'evidence_strength': 'medium-high', 'supporting_studies': ['Cready & Ryngaert 2019 - VIX transition states']}]\nStrategy ideas: [{'idea': 'VIX-threshold conditional factor exposure', 'description': 'Allocate to quality+low-vol when VIX >25, rotate to momentum+beta when VIX <15. Use VIX term structure (contango vs backwardation) as secondary signal to time transitions.', 'expected_edge': 'Residualized momentum crash risk; capture quality defense in drawdowns', 'implementation_notes': 'Use VIX 20-day moving average as smoothing signal to avoid whipsaw. Consider VIX futures roll cost in backtesting.'}, {'idea': 'Regime-detection signal using VIX percentiles', 'description': 'Rather than absolute VIX thresholds, use rolling percentile of VIX (e.g., top 20% historical percentile = high regime). More robust across market regimes.', 'expected_edge': 'Adaptive to changing vol environment baseline', 'implementation_notes': 'Requires sufficient historical VIX data. Consider blending with realized vol (overnight vs intraday) for precision.'}, {'idea': 'Quality-minus-junk with vol-overlay', 'description': \"Long quality short junk, but reduce exposure (or hedge with VIX calls) when VIX crosses upward through 20-day MA. The quality factor's safety premium is compressed in fast VIX spikes.\", 'expected_edge': 'Captures quality risk premium without tail risk', 'implementation_notes': 'Junk definition: Bottom quartile by GP/A, interest coverage ratio <2x, or rating below B-'}, {'idea': 'Short-term momentum with vol-scaled stops', 'description': 'In high VIX regimes (>25), switch to shorter lookback (5-day instead of 60-day) momentum. Use realized vol scaling to set position size - smaller in high VIX to limit crash risk.', 'expected_edge': 'Captures momentum inTrending markets without tail exposure', 'implementation_notes': 'Consider adding a trend filter (DMA slope) to avoid momentum crashes in choppy high-VIX markets.'}]\nMarket focus: equities\n\nCreate 1-2 specific, actionable trading strategies.\nRules must be concrete (not vague).\n\nOutput JSON array with: name, description, entry_rules, exit_rules, position_sizing, stop_loss, time_horizon",
+        "reason": "Sharpe: 0.9996519094885741",
+        "time": 1777063434.76242
       },
       {
-        "prompt": "Create a HYBRID strategy combining vol_term_structure_rebalancing and regime_transition_vol_positioning.\n\nDirection A (vol_term_structure_rebalancing): Combines calendar rebalancing with contango steepness thresholds to optimize roll yield capture while minimizing transaction costs during high-vol regimes. Rebalance weekly when contango >8% (steep), monthly when <5% (shallow). Skips rebalancing during VIX spikes (>25) regardless of schedule.\nEntry: ['Enter when front-month VIX futures are in contango: (second_month_price / front_month_price - 1) > 5%', 'Hold period: 5 trading days minimum before first rebalance opportunity', 'No entry if VIX spot > 25 (widened spreads make entry unfavorable)']\nExit: ['Exit when contango steepness drops below 2% (backwardation or flat)', 'Exit if position drawdown exceeds 8% from entry', 'Maximum hold: 25 trading days regardless of contango level']\n\nDirection B (regime_transition_vol_positioning): Long vol calendar spread triggered when VIX is sub-16 with concurrent put-call ratio elevated and breadth deteriorating. Targets 48-72 hour vol spike regime shift. Max loss capped at net debit.\nEntry: ['VIX close < 16.0', 'SPX put-call ratio > 0.75 (10-day rolling)', 'A/D line 10-day correlation < 0.4 OR % stocks above 20dma < 50%', 'VVIX/VIX ratio < 0.85 with 5-day declining trend', 'No prior signal within 10 trading days (avoid re-entry)']\nExit: ['Primary: VIX touches 22 \u2014 close entire position', 'Secondary: 72 hours post-entry with VIX < 18 \u2014 take 50% profit', 'Tertiary: If VVIX/VIX reverses above 0.95 without vol spike \u2014 exit at 25% loss', 'Hard stop: PC ratio breaks above 1.0 \u2014 exit immediately']\n\nMarket focus: futures\n\nCombine the BEST elements from both. Create concrete, testable rules.\n\nOutput JSON: name, description, entry_rules, exit_rules, position_sizing, stop_loss, time_horizon, market_focus",
-        "reason": "Sharpe: 0.630235530939802",
-        "time": 1777060002.565742
+        "prompt": "Based on research branch: low_vol_factor_rotation\nDescription: Investigate which quantitative factors (momentum, value, quality, size) perform best during low VIX regimes versus high VIX regimes. Build a regime-aware factor model that rotates exposure based on VIX level.\nFindings: [{'pattern': 'Beta factor - U-shaped relationship with VIX', 'description': 'High-beta stocks underperform in moderate-high VIX (20-30) due to leverage aversion, but during extreme stress (VIX >40), high-beta can outperform as a risk-on recovery bet if the VIX peak is being priced as temporary. Beta effect is non-linear.', 'evidence_strength': 'medium'}, {'pattern': 'Size factor - inconsistent across regimes', 'description': 'Small-cap underperforms in high VIX (liquidity premium), but this is confounded by quality overlap. Pure size (no quality overlay) shows no reliable regime dependency.', 'evidence_strength': 'low'}, {'pattern': 'VIX regime transitions matter more than level', 'description': 'Factor performance depends on VIX direction (rising vs falling) as much as level. Momentum fails most severely when VIX is rising (risk-off cascade), even if starting VIX level is moderate.', 'evidence_strength': 'medium-high', 'supporting_studies': ['Cready & Ryngaert 2019 - VIX transition states']}]\nStrategy ideas: [{'idea': 'VIX-threshold conditional factor exposure', 'description': 'Allocate to quality+low-vol when VIX >25, rotate to momentum+beta when VIX <15. Use VIX term structure (contango vs backwardation) as secondary signal to time transitions.', 'expected_edge': 'Residualized momentum crash risk; capture quality defense in drawdowns', 'implementation_notes': 'Use VIX 20-day moving average as smoothing signal to avoid whipsaw. Consider VIX futures roll cost in backtesting.'}, {'idea': 'Regime-detection signal using VIX percentiles', 'description': 'Rather than absolute VIX thresholds, use rolling percentile of VIX (e.g., top 20% historical percentile = high regime). More robust across market regimes.', 'expected_edge': 'Adaptive to changing vol environment baseline', 'implementation_notes': 'Requires sufficient historical VIX data. Consider blending with realized vol (overnight vs intraday) for precision.'}, {'idea': 'Quality-minus-junk with vol-overlay', 'description': \"Long quality short junk, but reduce exposure (or hedge with VIX calls) when VIX crosses upward through 20-day MA. The quality factor's safety premium is compressed in fast VIX spikes.\", 'expected_edge': 'Captures quality risk premium without tail risk', 'implementation_notes': 'Junk definition: Bottom quartile by GP/A, interest coverage ratio <2x, or rating below B-'}, {'idea': 'Short-term momentum with vol-scaled stops', 'description': 'In high VIX regimes (>25), switch to shorter lookback (5-day instead of 60-day) momentum. Use realized vol scaling to set position size - smaller in high VIX to limit crash risk.', 'expected_edge': 'Captures momentum inTrending markets without tail exposure', 'implementation_notes': 'Consider adding a trend filter (DMA slope) to avoid momentum crashes in choppy high-VIX markets.'}]\nMarket focus: equities\n\nCreate 1-2 specific, actionable trading strategies.\nRules must be concrete (not vague).\n\nOutput JSON array with: name, description, entry_rules, exit_rules, position_sizing, stop_loss, time_horizon",
+        "reason": "Sharpe: 0.6000359405900699",
+        "time": 1777063469.513408
       }
     ],
     "learned_concepts": [],
     "market_insights": []
   },
-  "current_prompt": "You are a quant researcher at a hedge fund specializing in volatility trading. Analyze markets, develop trading strategies, manage positions.\n\nCore competencies:\n1. Variance Risk Premium (VRP) capture when VIX < 15 with inverted term structure\n2. Volatility regime transition detection and positioning\n3. Hybrid strategies combining systematic VRP with regime-aware overlays\n\nOutput valid JSON. Focus on risk-adjusted returns (Sharpe ratio, Sortino, max drawdown).\n\nSTRATEGY DEVELOPMENT RULES:\n1. Entry signals must be CONCRETE: specific thresholds (VIX < 16, PC ratio > 0.75, etc.), no vague conditions\n2. Exit rules must be TIME-BOUNDED: 72-96 hour soft exits, VIX level hard stops (typically VIX > 22)\n3. Position sizing: dynamic (25% base, scale to 75% on confirmations), never full notional upfront\n4. Regime transitions: require MULTIPLE confirming indicators (PC ratio + breadth decay + VVIX/VIX), single signals insufficient\n5. Hybrid combinations: pair systematic VRP capture (Direction A) with regime overlay (Direction B) \u2014 NOT independent parallel positions\n\nVALIDATED PATTERNS:\n- VIX < 16 + PC ratio > 0.75 + breadth decay \u2192 Long vol calendar spread (72-96hr target)\n- VIX < 15 + inverted term structure (front IV < back IV by >0.5) + term slope < -0.5 \u2192 Short variance, collect premium, exit at term flatten or VIX > 22\n- VVIX/VIX < 0.85 with declining 5-day trend \u2192 Options market complacency signal, precedes vol regime shift by 36hrs\n\nFAILED PATTERNS TO AVOID:\n- Pure regime strategies without VRP overlay (high failure rate)\n- Single-indicator entries (PC ratio alone insufficient)\n- Long vol positions without time limit when VIX < 15 (time decay destructive)\n\nOutput JSON array with: name, description, entry_rules (array of concrete conditions), exit_rules (array with time + level triggers), position_sizing, stop_loss, time_horizon, market_focus"
+  "current_prompt": "You are a quant researcher at a hedge fund. Analyze markets, develop trading strategies, manage positions. Output valid JSON. Focus on risk-adjusted returns.\n\nKey learnings from iterations:\n- Factor rotation strategies with low-volatility focus consistently outperform\n- Target Sharpe-like ratios near 1.0 for signal quality\n- Strategies that blend momentum, value, and low-vol factors show robustness\n- Avoid overfitting to narrow market regimes\n\nYour prompt should:\n1. Initialize research state with market regime detection\n2. Generate factor candidates across: momentum, value, low-vol, quality, size\n3. Weight factor combinations by regime alignment\n4. Reject signals with Sharpe < 0.7\n5. Prefer ensemble strategies that combine 2-3 uncorrelated factors"
 }
