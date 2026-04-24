@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "preview": "wrangler pages dev out",
+    "preview": "wrangler pages dev dist",
     "deploy": "npm run build && npx wrangler pages deploy dist"
   },
   "dependencies": {
