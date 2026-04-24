@@ -26,7 +26,7 @@ body {
   font-weight: var(--weight-regular);
   line-height: var(--leading-relaxed);
   color: var(--color-obsidian);
-  background-color: var(--color-white);
+  background-color: #fffeff;
   min-height: 100vh;
 }
 

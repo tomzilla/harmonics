@@ -2,11 +2,18 @@ export default function Home() {
   return (
     <main style={{
       display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
+      flexDirection: 'column',
+      justifyContent: 'space-between',
       minHeight: '100vh',
+      padding: 'var(--space-6)',
     }}>
-      <div style={{ maxWidth: 'var(--container-narrow)', textAlign: 'center' }}>
+      <div style={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        flex: 1,
+      }}>
         <h1 className="display" style={{ marginBottom: 'var(--space-6)' }}>
           Harmonics<sup style={{ fontSize: '0.5em', verticalAlign: 'super' }}>24</sup>
         </h1>
@@ -20,14 +27,15 @@ export default function Home() {
         }}>
           Solving human scale problems
         </p>
-        <footer style={{
-          marginTop: 'var(--space-12)',
-          color: 'var(--color-steel)',
-          fontSize: 'var(--text-small)',
-        }}>
-          &copy; {new Date().getFullYear()} Harmonics Industries
-        </footer>
       </div>
+      <footer style={{
+        color: 'var(--color-steel)',
+        fontSize: 'var(--text-small)',
+        paddingBottom: 'var(--space-12)',
+        textAlign: 'center',
+      }}>
+        &copy; {new Date().getFullYear()} Harmonics24
+      </footer>
     </main>
   );
 }

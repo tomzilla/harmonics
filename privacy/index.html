@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Privacy Policy | Tech & Privacy Law Firm</title>
+  <style>
+    :root {
+      --color-primary: #1a365d;
+      --color-secondary: #2c5282;
+      --color-accent: #3182ce;
+      --color-background: #f7fafc;
+      --color-surface: #ffffff;
+      --color-text: #1a202c;
+      --color-text-muted: #4a5568;
+      --color-border: #e2e8f0;
+      --color-highlight: #ebf8ff;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Georgia', 'Times New Roman', serif;
+      font-size: 16px;
+      line-height: 1.7;
+      color: var(--color-text);
+      background-color: var(--color-background);
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    header {
+      background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
+      color: white;
+      padding: 48px 0;
+      margin-bottom: 48px;
+    }
+
+    header .container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      opacity: 0.9;
+    }
+
+    .header-title {
+      font-size: 14px;
+      opacity: 0.8;
+    }
+
+    .hero {
+      text-align: center;
+      padding: 48px 0;
+    }
+
+    .hero h1 {
+      font-size: 42px;
+      font-weight: 400;
+      margin-bottom: 16px;
+      color: var(--color-primary);
+    }
+
+    .hero .effective-date {
+      font-size: 14px;
+      color: var(--color-text-muted);
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    }
+
+    .last-updated {
+      font-size: 13px;
+      color: var(--color-text-muted);
+      margin-top: 8px;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    }
+
+    main {
+      background: var(--color-surface);
+      border-radius: 8px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+      padding: 48px;
+      margin-bottom: 48px;
+    }
+
+    section {
+      margin-bottom: 40px;
+      padding-bottom: 40px;
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    section:last-child {
+      border-bottom: none;
+      margin-bottom: 0;
+      padding-bottom: 0;
+    }
+
+    h2 {
+      font-size: 22px;
+      font-weight: 600;
+      color: var(--color-primary);
+      margin-bottom: 20px;
+      padding-bottom: 12px;
+      border-bottom: 2px solid var(--color-accent);
+      display: inline-block;
+    }
+
+    h3 {
+      font-size: 17px;
+      font-weight: 600;
+      color: var(--color-secondary);
+      margin: 24px 0 12px;
+    }
+
+    p {
+      margin-bottom: 16px;
+    }
+
+    ul, ol {
+      margin: 16px 0;
+      padding-left: 24px;
+    }
+
+    li {
+      margin-bottom: 8px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+      font-size: 14px;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    }
+
+    th, td {
+      text-align: left;
+      padding: 12px 16px;
+      border: 1px solid var(--color-border);
+    }
+
+    th {
+      background-color: var(--color-highlight);
+      font-weight: 600;
+      color: var(--color-primary);
+    }
+
+    tr:nth-child(even) {
+      background-color: #fafafa;
+    }
+
+    a {
+      color: var(--color-accent);
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    .contact-box {
+      background: var(--color-highlight);
+      border-left: 4px solid var(--color-accent);
+      padding: 24px;
+      margin: 24px 0;
+      border-radius: 0 4px 4px 0;
+    }
+
+    .contact-box p {
+      margin-bottom: 8px;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    }
+
+    .contact-box strong {
+      color: var(--color-primary);
+    }
+
+    .disclaimer {
+      background: #fffbeb;
+      border: 1px solid #f59e0b;
+      padding: 16px;
+      border-radius: 4px;
+      font-size: 13px;
+      color: #92400e;
+      margin-top: 24px;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    }
+
+    footer {
+      text-align: center;
+      padding: 32px 0;
+      color: var(--color-text-muted);
+      font-size: 13px;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    }
+
+    .table-of-contents {
+      background: var(--color-highlight);
+      border-radius: 8px;
+      padding: 24px 32px;
+      margin-bottom: 32px;
+    }
+
+    .table-of-contents h3 {
+      margin-top: 0;
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--color-text-muted);
+    }
+
+    .table-of-contents ol {
+      margin: 12px 0;
+      padding-left: 20px;
+    }
+
+    .table-of-contents li {
+      margin-bottom: 6px;
+    }
+
+    .table-of-contents a {
+      color: var(--color-secondary);
+    }
+
+    .table-of-contents a:hover {
+      color: var(--color-accent);
+    }
+
+    @media (max-width: 640px) {
+      main {
+        padding: 24px;
+      }
+
+      .hero h1 {
+        font-size: 32px;
+      }
+
+      table {
+        font-size: 12px;
+      }
+
+      th, td {
+        padding: 8px 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container">
+      <div class="logo">Law Firm LLP</div>
+      <div class="header-title">Privacy Policy</div>
+    </div>
+  </header>
+
+  <div class="container">
+    <div class="hero">
+      <h1>Privacy Policy</h1>
+      <div class="effective-date">Effective Date: April 24, 2026</div>
+      <div class="last-updated">Last Reviewed: April 24, 2026</div>
+    </div>
+
+    <main>
+      <nav class="table-of-contents">
+        <h3>Contents</h3>
+        <ol>
+          <li><a href="#introduction">Introduction</a></li>
+          <li><a href="#scope">Scope</a></li>
+          <li><a href="#data-collection">Personal Data We Collect</a></li>
+          <li><a href="#purposes">Purposes and Legal Basis</a></li>
+          <li><a href="#sensitive">Sensitive Personal Data</a></li>
+          <li><a href="#sharing">Data Sharing and Disclosures</a></li>
+          <li><a href="#retention">Data Retention</a></li>
+          <li><a href="#rights">Your Rights</a></li>
+          <li><a href="#security">Data Security</a></li>
+          <li><a href="#cookies">Cookies and Tracking</a></li>
+          <li><a href="#children">Children's Privacy</a></li>
+          <li><a href="#changes">Changes to This Policy</a></li>
+          <li><a href="#contact">Contact Information</a></li>
+        </ol>
+      </nav>
+
+      <section id="introduction">
+        <h2>1. Introduction</h2>
+        <p>This Privacy Policy ("Policy") describes how Law Firm LLP ("we," "us," or "our") collects, uses, discloses, and safeguards information about individuals ("you" or "your") in connection with our legal services, website, and related communications. We are committed to protecting your privacy and complying with applicable data protection laws, including the General Data Protection Regulation (GDPR), the California Consumer Privacy Act (CCPA), and other relevant privacy regulations.</p>
+        <p>By accessing our website or using our services, you acknowledge that you have read and understood this Policy.</p>
+      </section>
+
+      <section id="scope">
+        <h2>2. Scope</h2>
+        <p>This Policy applies to:</p>
+        <ul>
+          <li>Visitors of our website</li>
+          <li>Clients and prospective clients</li>
+          <li>Opposing parties and counsel (in the context of legal proceedings)</li>
+          <li>Job applicants and employees</li>
+          <li>Any other individuals whose personal data we process</li>
+        </ul>
+      </section>
+
+      <section id="data-collection">
+        <h2>3. Personal Data We Collect</h2>
+
+        <h3>3.1 Information You Provide Directly</h3>
+        <p>We may collect the following categories of personal data you provide to us:</p>
+        <table>
+          <thead>
+            <tr>
+              <th>Category</th>
+              <th>Examples</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Identity Data</strong></td>
+              <td>Name, title, date of birth, signature</td>
+            </tr>
+            <tr>
+              <td><strong>Contact Data</strong></td>
+              <td>Email address, postal address, phone number</td>
+            </tr>
+            <tr>
+              <td><strong>Financial Data</strong></td>
+              <td>Billing information, payment card details, invoice history</td>
+            </tr>
+            <tr>
+              <td><strong>Case-Related Data</strong></td>
+              <td>Matter description, legal documents, evidence, correspondence</td>
+            </tr>
+            <tr>
+              <td><strong>Employment Data</strong></td>
+              <td>CV, employment history, professional licenses, bar admissions</td>
+            </tr>
+            <tr>
+              <td><strong>Communication Preferences</strong></td>
+              <td>Opt-in preferences, communication history</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h3>3.2 Information Collected Automatically</h3>
+        <p>When you visit our website, we may automatically collect:</p>
+        <ul>
+          <li>IP address and device identifiers</li>
+          <li>Browser type and version</li>
+          <li>Operating system</li>
+          <li>Pages visited and time spent</li>
+          <li>Referring website addresses</li>
+          <li>Cookies and tracking technologies (see Section 10)</li>
+        </ul>
+
+        <h3>3.3 Information from Third Parties</h3>
+        <p>We may receive personal data from:</p>
+        <ul>
+          <li>Referral sources and professional contacts</li>
+          <li>Publicly available sources (court records, bar directories, corporate registries)</li>
+          <li>Service providers and vendors</li>
+          <li>Business partners (with your consent where required)</li>
+        </ul>
+      </section>
+
+      <section id="purposes">
+        <h2>4. Purposes and Legal Basis for Processing</h2>
+
+        <h3>4.1 We Process Personal Data For:</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Purpose</th>
+              <th>GDPR Legal Basis</th>
+              <th>CCPA Basis</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Providing legal services</td>
+              <td>Contract performance (Art. 6(1)(b))</td>
+              <td>Service delivery</td>
+            </tr>
+            <tr>
+              <td>Client onboarding and identification</td>
+              <td>Legal obligation (Art. 6(1)(c))</td>
+              <td>Transaction completion</td>
+            </tr>
+            <tr>
+              <td>Billing and payment processing</td>
+              <td>Contract performance (Art. 6(1)(b))</td>
+              <td>Transaction completion</td>
+            </tr>
+            <tr>
+              <td>Communicating about matters</td>
+              <td>Legitimate interests (Art. 6(1)(f))</td>
+              <td>Service provision</td>
+            </tr>
+            <tr>
+              <td>Marketing (where permitted)</td>
+              <td>Consent (Art. 6(1)(a))</td>
+              <td>Right to opt-out</td>
+            </tr>
+            <tr>
+              <td>Complying with legal obligations</td>
+              <td>Legal obligation (Art. 6(1)(c))</td>
+              <td>Legal compliance</td>
+            </tr>
+            <tr>
+              <td>Fraud prevention and security</td>
+              <td>Legitimate interests (Art. 6(1)(f))</td>
+              <td>Security</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h3>4.2 Legitimate Interests</h3>
+        <p>Where we rely on legitimate interests, we balance our interests against your rights and freedoms. You may object to this processing at any time (see Section 8).</p>
+      </section>
+
+      <section id="sensitive">
+        <h2>5. Sensitive Personal Data</h2>
+        <p>We may process sensitive personal data (special categories under GDPR, "sensitive personal information" under CCPA) only when:</p>
+        <ul>
+          <li>Necessary for the establishment, exercise, or defense of legal claims</li>
+          <li>You have explicitly consented</li>
+          <li>Required by applicable law</li>
+          <li>Necessary to protect your vital interests</li>
+        </ul>
+        <p>Sensitive data may include: Social Security Numbers, financial account information, health information disclosed in legal matters, and other data explicitly protected by law.</p>
+      </section>
+
+      <section id="sharing">
+        <h2>6. Data Sharing and Disclosures</h2>
+
+        <h3>6.1 We Do Not Sell Your Personal Data</h3>
+        <p>We do not sell, rent, or trade your personal information to third parties for marketing purposes.</p>
+
+        <h3>6.2 We May Disclose Data To:</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Recipient</th>
+              <th>Purpose</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Courts and Opposing Counsel</strong></td>
+              <td>Litigation and dispute resolution</td>
+            </tr>
+            <tr>
+              <td><strong>Government Authorities</strong></td>
+              <td>Regulatory compliance and legal obligations</td>
+            </tr>
+            <tr>
+              <td><strong>Service Providers</strong></td>
+              <td>Billing, technology, and administrative support</td>
+            </tr>
+            <tr>
+              <td><strong>Professional Advisors</strong></td>
+              <td>Accounting, auditing, and legal advice</td>
+            </tr>
+            <tr>
+              <td><strong>Successor Entities</strong></td>
+              <td>Mergers, acquisitions, or firm transitions</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h3>6.3 International Transfers</h3>
+        <p>If we transfer personal data outside the European Economic Area (EEA), we ensure appropriate safeguards through:</p>
+        <ul>
+          <li>Standard Contractual Clauses (SCCs)</li>
+          <li>Adequacy decisions by the European Commission</li>
+          <li>Binding Corporate Rules (where applicable)</li>
+        </ul>
+      </section>
+
+      <section id="retention">
+        <h2>7. Data Retention</h2>
+        <p>We retain personal data only for as long as necessary to fulfill the purposes outlined in this Policy, unless a longer retention period is required by law.</p>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Data Type</th>
+              <th>Retention Period</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Client matter files</td>
+              <td>7 years after matter conclusion</td>
+            </tr>
+            <tr>
+              <td>Billing records</td>
+              <td>7 years</td>
+            </tr>
+            <tr>
+              <td>Marketing data</td>
+              <td>Until consent withdrawn + 2 years</td>
+            </tr>
+            <tr>
+              <td>Job applications (unsuccessful)</td>
+              <td>6 months</td>
+            </tr>
+            <tr>
+              <td>Website logs</td>
+              <td>1 year</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section id="rights">
+        <h2>8. Your Rights</h2>
+
+        <h3>8.1 General Rights</h3>
+        <p>You may have the following rights regarding your personal data:</p>
+        <ul>
+          <li><strong>Access</strong> — Request a copy of your personal data</li>
+          <li><strong>Rectification</strong> — Request correction of inaccurate data</li>
+          <li><strong>Erasure</strong> — Request deletion of your data ("right to be forgotten")</li>
+          <li><strong>Restriction</strong> — Request limited processing</li>
+          <li><strong>Portability</strong> — Receive your data in a structured, machine-readable format</li>
+          <li><strong>Objection</strong> — Object to processing based on legitimate interests</li>
+          <li><strong>Withdraw Consent</strong> — Where processing is based on consent</li>
+        </ul>
+
+        <h3>8.2 Additional Rights Under CCPA</h3>
+        <p>California residents have the right to:</p>
+        <ul>
+          <li>Know what personal information is collected about them</li>
+          <li>Know whether their data is sold or disclosed (and to whom)</li>
+          <li>Say no to the sale of personal information</li>
+          <li>Not be discriminated against for exercising their privacy rights</li>
+        </ul>
+
+        <h3>8.3 Additional Rights Under GDPR</h3>
+        <p>EEA/UK residents have the right to:</p>
+        <ul>
+          <li>Lodge a complaint with a supervisory authority</li>
+          <li>Receive a copy of SCCs upon request</li>
+          <li>Request human review of automated decisions</li>
+        </ul>
+
+        <div class="contact-box">
+          <p><strong>How to Exercise Your Rights</strong></p>
+          <p>Email: <a href="mailto:privacy@lawfirm.com">privacy@lawfirm.com</a></p>
+          <p>Mail: Privacy Officer, 123 Legal Street, Suite 500, New York, NY 10001</p>
+          <p>Phone: (212) 555-0100</p>
+          <p style="margin-bottom: 0;">We will respond within 30 days. For CCPA requests, we will verify your identity before processing.</p>
+        </div>
+      </section>
+
+      <section id="security">
+        <h2>9. Data Security</h2>
+        <p>We implement appropriate technical and organizational measures to protect personal data, including:</p>
+        <ul>
+          <li>AES-256 encryption for data at rest</li>
+          <li>TLS 1.3 for data in transit</li>
+          <li>Multi-factor authentication for system access</li>
+          <li>Regular security assessments and penetration testing</li>
+          <li>Access controls and least-privilege principles</li>
+          <li>Employee training on data protection</li>
+        </ul>
+        <p>In the event of a data breach affecting your rights, we will notify you and relevant authorities within 72 hours as required by GDPR Article 33.</p>
+      </section>
+
+      <section id="cookies">
+        <h2>10. Cookies and Tracking</h2>
+
+        <h3>10.1 Types of Cookies We Use</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Type</th>
+              <th>Purpose</th>
+              <th>Duration</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Essential</strong></td>
+              <td>Core functionality, security</td>
+              <td>Session</td>
+            </tr>
+            <tr>
+              <td><strong>Analytics</strong></td>
+              <td>Website usage statistics</td>
+              <td>2 years</td>
+            </tr>
+            <tr>
+              <td><strong>Marketing</strong></td>
+              <td>Ad targeting (with consent)</td>
+              <td>90 days</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h3>10.2 Managing Cookies</h3>
+        <p>You may manage your cookie preferences through our Cookie Consent Tool or your browser settings. Disabling non-essential cookies may affect website functionality.</p>
+      </section>
+
+      <section id="children">
+        <h2>11. Children's Privacy</h2>
+        <p>Our services are not directed to individuals under 18 (or 16 in the EEA). We do not knowingly collect personal data from children. If you believe we have collected such data, contact us immediately.</p>
+      </section>
+
+      <section id="changes">
+        <h2>12. Changes to This Policy</h2>
+        <p>We may update this Policy periodically. The "Effective Date" at the top indicates the most recent revision. For material changes, we will:</p>
+        <ul>
+          <li>Provide prominent notice on our website</li>
+          <li>Request renewed consent where required</li>
+          <li>Email registered users of changes</li>
+        </ul>
+      </section>
+
+      <section id="contact">
+        <h2>13. Contact Information</h2>
+        <p>For privacy-related inquiries or to exercise your rights:</p>
+
+        <div class="contact-box">
+          <p><strong>Privacy Officer</strong></p>
+          <p>Email: <a href="mailto:privacy@lawfirm.com">privacy@lawfirm.com</a></p>
+          <p>Phone: (212) 555-0100</p>
+          <p style="margin-bottom: 0;">Address: 123 Legal Street, Suite 500<br>New York, NY 10001</p>
+        </div>
+
+        <p>For EU/UK supervisory authorities, contact details are available at:</p>
+        <ul>
+          <li>EU: <a href="https://edpb.europa.eu/about-edpb/about-edpb/members_en" target="_blank" rel="noopener">edpb.europa.eu/about-edpb/about-edpb/members_en</a></li>
+          <li>UK: <a href="https://ico.org.uk/global/contact-us/" target="_blank" rel="noopener">ico.org.uk/global/contact-us/</a></li>
+        </ul>
+      </section>
+
+      <section id="force-majeure">
+        <h2>14. Force Majeure</h2>
+        <p>We shall not be liable for any failure to perform our obligations where such failure results from causes beyond our reasonable control, including but not limited to acts of God, natural disasters, war, terrorism, riots, embargoes, acts of civil or military authorities, fire, floods, accidents, pandemic, strikes, or shortages of transportation, facilities, fuel, energy, labor, or materials.</p>
+      </section>
+
+      <div class="disclaimer">
+        <strong>Disclaimer:</strong> This Privacy Policy is provided for informational purposes and does not constitute legal advice. Consult with qualified legal counsel regarding specific privacy compliance obligations.
+      </div>
+    </main>
+
+    <footer>
+      <p>&copy; 2026 Law Firm LLP. All rights reserved.</p>
+      <p>Version 1.0 &nbsp;|&nbsp; Privacy Compliance Team &nbsp;|&nbsp; Next Review: April 24, 2027</p>
+    </footer>
+  </div>
+</body>
+</html>
