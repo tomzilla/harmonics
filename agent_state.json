@@ -1,109 +1,84 @@
 {
-  "iteration": 2,
-  "timestamp": 1777053182.19075,
+  "iteration": 3,
+  "timestamp": 1777057618.8001978,
   "branches": [
     {
       "id": "branch_0",
-      "name": "vix_term_structure_arbitrage",
-      "description": "Exploit spreads between front-month VIX futures and longer-dated contracts when term structure enters backwardation",
-      "confidence": 0.38,
-      "hypothesis": "Low-VIX (< 20) backwardation is a necessary but insufficient signal for imminent vol expansion. The relationship is directionally correct but the signal-to-noise ratio is low \u2014 most backwardation events resolve with modest vol increases rather than spike. Hypothesis refinement: the hypothesis should specify that CONTEMPORANEOUS backwardation + elevated SPX put/call ratio (>1.2) + declining open interest are required conditions. Without the second-order effects, the base signal has ~55% hit rate on sustained vol expansion (>5 VIX pts within 10 days). Roll yield extraction is viable but needs position sizing discipline due to tail risk of contango persistence.",
-      "findings": [
-        "VIX term structure exhibits strong mean-reversion: futures curve typically in contango (front-month < deferred) as market prices vol-of-vol risk premium",
-        "Backwardation regime historically occurs ~15-20% of trading days, primarily during stress events (2008, 2020, 2022 rate-shock periods)",
-        "Low-VIX (< 20) + backwardation is rare confluence: occurred ~8% of observations 2015-2024",
-        "Roll yield extraction is directional: long front-month + short deferred in backwardation profits when curve normalizes (converges to contango)",
-        "Back-of-curve (3-month out) VIX futures show ~1.5-2x volatility of spot VIX, amplifying spread dynamics",
-        "Transaction costs (bid-ask ~0.5-1 idx pts on VIX futures) materially erode spread-based strategies"
-      ],
-      "iterations_run": 1,
-      "market_focus": "volatility derivatives"
+      "name": "Direction 0",
+      "description": "exploring",
+      "confidence": 0.5,
+      "hypothesis": "",
+      "findings": [],
+      "iterations_run": 3,
+      "market_focus": "equities"
     },
     {
       "id": "branch_1",
-      "name": "implied_realized_vol_spread",
-      "description": "Trade the mean-reversion of implied volatility (VIX) against realized volatility computed from high-frequency data",
-      "confidence": 0.35,
-      "hypothesis": "VIX overstates realized vol by 2-4 points during low-stress periods (VIX <15). This spread mean-reverts over 2-10 day windows. The edge exists but is regime-dependent: requires VIX level filter (<15) and spread threshold (>3 pts). Magnitude varies with variance risk premium which itself shifts with\u5b8f\u89c2\u6d41\u52a8\u6027. Iteration 2 should focus on quantifying actual historical win rate and avg spread compression magnitude.",
-      "findings": [
-        {
-          "pattern": "VIX-RV Spread Mean-Reversion",
-          "description": "VIX typically overstates realized SPX volatility by 2-4 points in calm markets due to variance risk premium. The spread is stationary and mean-reverts.",
-          "evidence_strength": "theoretical",
-          "edge": "Short vol when spread > 4 points (VIX significantly overstating)"
-        },
-        {
-          "pattern": "Volatility of Vol",
-          "description": "VIX is a forward-looking 30-day forecast using OTM puts/calls. Realized vol from intraday data captures actual price path. The variance risk premium compensates for vol-of-vol risk.",
-          "evidence_strength": "theoretical",
-          "edge": "Premium is largest during low VIX regimes when tail risk is underpriced"
-        },
-        {
-          "pattern": "Regime Dependency",
-          "description": "The spread is unreliable during stress events (2008, COVID, etc.) when VIX understated rather than overstated. The hypothesis holds specifically in low-VIX regimes (<15).",
-          "evidence_strength": "moderate",
-          "edge": "Filter: only trade when VIX < 15 and spread > 3 points"
-        },
-        {
-          "pattern": "Term Structure Effect",
-          "description": "Front-month VIX futures roll cost erodes P&L. Using longer-dated options (SPX weekly/monthly) may reduce this friction.",
-          "evidence_strength": "observed",
-          "edge": "SPX options rather than VIX futures/options"
-        }
-      ],
-      "iterations_run": 1,
-      "market_focus": "options on SPX"
+      "name": "Direction 1",
+      "description": "exploring",
+      "confidence": 0.5,
+      "hypothesis": "",
+      "findings": [],
+      "iterations_run": 2,
+      "market_focus": "equities"
     },
     {
       "id": "branch_2",
-      "name": "cross_asset_correlation_fragility",
-      "description": "Detect when low-VIX environments produce anomalous correlation structures between equities, bonds, and credit",
-      "confidence": 0.35,
-      "hypothesis": "CONFIRMED (low confidence): Correlations do collapse to zero in the 2-5 day pre-spike window, enabling long-vol trades with low directional exposure. However, the mechanism is more nuanced than initially stated \u2014 the collapse is regime-dependent (requires both low VIX AND tight credit spreads AND strong dollar). Single-factor low-VIX entry is insufficient. Next iteration should test: 1) Does the 2-5 day window hold historically? 2) What is the baseline correlation decay rate vs the anomalous rate? 3) Does the dollar add predictive value?",
-      "findings": [
-        "Low-VIX (<15) environments compress cross-asset correlations to anomalously low levels",
-        "Correlation collapse precedes vol spikes by 2-5 trading days, not during",
-        "The 'correlations go to 1 in crashes' axiom applies DURING the spike, not BEFORE",
-        "Credit spreads + VIX + dollar trilemma: when all three are compressed, fragility window opens",
-        "Long-vol with low directional exposure is achievable in pre-spike window via ratio spreads or variance swaps"
-      ],
+      "name": "Direction 2",
+      "description": "exploring",
+      "confidence": 0.5,
+      "hypothesis": "",
+      "findings": [],
       "iterations_run": 1,
-      "market_focus": "multi-asset"
+      "market_focus": "equities"
     }
   ],
   "portfolio": {
     "total": 10000,
-    "cash": 4000.0,
-    "allocated": 6000.0
+    "cash": 3272.5,
+    "allocated": 6727.5
   },
   "memory": {
     "successful_prompts": [
       {
-        "prompt": "Based on research branch: vix_term_structure_arbitrage\nDescription: Exploit spreads between front-month VIX futures and longer-dated contracts when term structure enters backwardation\nFindings: ['Roll yield extraction is directional: long front-month + short deferred in backwardation profits when curve normalizes (converges to contango)', 'Back-of-curve (3-month out) VIX futures show ~1.5-2x volatility of spot VIX, amplifying spread dynamics', 'Transaction costs (bid-ask ~0.5-1 idx pts on VIX futures) materially erode spread-based strategies']\nStrategy ideas: ['Calendar spread: Long front-month VIX futures / Short 2nd-month when VIX < 20 and term structure slope < -2 pts (annualized basis). Target curve normalization to contango.', 'Conditional roll: Only hold the spread when VIX < 20 AND slope < -1.5 (negative, indicating backwardation). Exit when VIX > 25 or curve flattens.', 'Signal refinement: Add VXV/VIX ratio as secondary filter \u2014 ratio < 0.95 suggests insufficient vol-of-vol premium, stronger backwardation signal.', 'Hedge tail risk: Short OTM SPX puts to fund long VIX futures exposure, creating vol-cone hedge.']\nMarket focus: volatility derivatives\n\nCreate 1-2 specific, actionable trading strategies.\nRules must be concrete (not vague).\n\nOutput JSON array with: name, description, entry_rules, exit_rules, position_sizing, stop_loss, time_horizon",
-        "strategy": "Conditional VIX Roll \u2014 VXV/VIX Dual Filter",
-        "sharpe": 3.9645,
-        "time": 1777053076.6657941
+        "prompt": "Based on research branch: Direction 0\nDescription: exploring\nFindings: Not yet explored\nStrategy ideas: []\nMarket focus: equities\n\nCreate 1-2 specific, actionable trading strategies.\nRules must be concrete (not vague).\n\nOutput JSON array with: name, description, entry_rules, exit_rules, position_sizing, stop_loss, time_horizon",
+        "strategy": "Direction 0 strategy",
+        "sharpe": 1.971004890481416,
+        "time": 1777057588.791898
+      },
+      {
+        "prompt": "Based on research branch: Direction 1\nDescription: exploring\nFindings: Not yet explored\nStrategy ideas: []\nMarket focus: equities\n\nCreate 1-2 specific, actionable trading strategies.\nRules must be concrete (not vague).\n\nOutput JSON array with: name, description, entry_rules, exit_rules, position_sizing, stop_loss, time_horizon",
+        "strategy": "Direction 1 strategy",
+        "sharpe": 1.4666381777936113,
+        "time": 1777057588.792293
+      },
+      {
+        "prompt": "Based on research branch: Direction 0\nDescription: exploring\nFindings: Not yet explored\nStrategy ideas: []\nMarket focus: equities\n\nCreate 1-2 specific, actionable trading strategies.\nRules must be concrete (not vague).\n\nOutput JSON array with: name, description, entry_rules, exit_rules, position_sizing, stop_loss, time_horizon",
+        "strategy": "Direction 0 strategy",
+        "sharpe": 2.0632150832176457,
+        "time": 1777057618.799217
+      },
+      {
+        "prompt": "Based on research branch: Direction 1\nDescription: exploring\nFindings: Not yet explored\nStrategy ideas: []\nMarket focus: equities\n\nCreate 1-2 specific, actionable trading strategies.\nRules must be concrete (not vague).\n\nOutput JSON array with: name, description, entry_rules, exit_rules, position_sizing, stop_loss, time_horizon",
+        "strategy": "Direction 1 strategy",
+        "sharpe": 1.601839477353828,
+        "time": 1777057618.799677
       }
     ],
     "failed_prompts": [
       {
-        "prompt": "Based on research branch: vix_term_structure_arbitrage\nDescription: Exploit spreads between front-month VIX futures and longer-dated contracts when term structure enters backwardation\nFindings: ['Roll yield extraction is directional: long front-month + short deferred in backwardation profits when curve normalizes (converges to contango)', 'Back-of-curve (3-month out) VIX futures show ~1.5-2x volatility of spot VIX, amplifying spread dynamics', 'Transaction costs (bid-ask ~0.5-1 idx pts on VIX futures) materially erode spread-based strategies']\nStrategy ideas: ['Calendar spread: Long front-month VIX futures / Short 2nd-month when VIX < 20 and term structure slope < -2 pts (annualized basis). Target curve normalization to contango.', 'Conditional roll: Only hold the spread when VIX < 20 AND slope < -1.5 (negative, indicating backwardation). Exit when VIX > 25 or curve flattens.', 'Signal refinement: Add VXV/VIX ratio as secondary filter \u2014 ratio < 0.95 suggests insufficient vol-of-vol premium, stronger backwardation signal.', 'Hedge tail risk: Short OTM SPX puts to fund long VIX futures exposure, creating vol-cone hedge.']\nMarket focus: volatility derivatives\n\nCreate 1-2 specific, actionable trading strategies.\nRules must be concrete (not vague).\n\nOutput JSON array with: name, description, entry_rules, exit_rules, position_sizing, stop_loss, time_horizon",
-        "reason": "Sharpe: -1.9886",
-        "time": 1777053017.261615
+        "prompt": "Based on research branch: Direction 0\nDescription: exploring\nFindings: Not yet explored\nStrategy ideas: []\nMarket focus: equities\n\nCreate 1-2 specific, actionable trading strategies.\nRules must be concrete (not vague).\n\nOutput JSON array with: name, description, entry_rules, exit_rules, position_sizing, stop_loss, time_horizon",
+        "reason": "Sharpe: 0.6719184845323942",
+        "time": 1777057558.784801
       },
       {
-        "prompt": "Based on research branch: cross_asset_correlation_fragility\nDescription: Detect when low-VIX environments produce anomalous correlation structures between equities, bonds, and credit\nFindings: [\"The 'correlations go to 1 in crashes' axiom applies DURING the spike, not BEFORE\", 'Credit spreads + VIX + dollar trilemma: when all three are compressed, fragility window opens', 'Long-vol with low directional exposure is achievable in pre-spike window via ratio spreads or variance swaps']\nStrategy ideas: [{'name': 'Correlation Decay Long-Vol', 'description': 'Buy 2:1 call ratio spreads on VIX futures + short EEM puts, targeting 2-5 day window post low-VIX compression', 'rationale': 'Low directional exposure, profits from correlation breakdown rather than direction'}, {'name': 'TDA Trade (Trinity Deflates, Assets Decouple)', 'description': 'Long OTM puts on SPX + Long EDZ credit default swaps + Short dollar risk-reversal', 'entry_signal': 'VIX<14, CDX IG <55bps, DXY <98', 'exit': 'VIX crosses above 20 or 5 days elapsed'}, {'name': 'Dispersion Long-Vol', 'description': 'Long IV of individual stocks vs short IV of index via variance swap arbitrage', 'edge': 'Individual stock IV stays elevated while index IV suppressed in fragile regime'}]\nMarket focus: multi-asset\n\nCreate 1-2 specific, actionable trading strategies.\nRules must be concrete (not vague).\n\nOutput JSON array with: name, description, entry_rules, exit_rules, position_sizing, stop_loss, time_horizon",
-        "reason": "Sharpe: -2.01",
-        "time": 1777053133.2170932
-      },
-      {
-        "prompt": "Based on research branch: cross_asset_correlation_fragility\nDescription: Detect when low-VIX environments produce anomalous correlation structures between equities, bonds, and credit\nFindings: [\"The 'correlations go to 1 in crashes' axiom applies DURING the spike, not BEFORE\", 'Credit spreads + VIX + dollar trilemma: when all three are compressed, fragility window opens', 'Long-vol with low directional exposure is achievable in pre-spike window via ratio spreads or variance swaps']\nStrategy ideas: [{'name': 'Correlation Decay Long-Vol', 'description': 'Buy 2:1 call ratio spreads on VIX futures + short EEM puts, targeting 2-5 day window post low-VIX compression', 'rationale': 'Low directional exposure, profits from correlation breakdown rather than direction'}, {'name': 'TDA Trade (Trinity Deflates, Assets Decouple)', 'description': 'Long OTM puts on SPX + Long EDZ credit default swaps + Short dollar risk-reversal', 'entry_signal': 'VIX<14, CDX IG <55bps, DXY <98', 'exit': 'VIX crosses above 20 or 5 days elapsed'}, {'name': 'Dispersion Long-Vol', 'description': 'Long IV of individual stocks vs short IV of index via variance swap arbitrage', 'edge': 'Individual stock IV stays elevated while index IV suppressed in fragile regime'}]\nMarket focus: multi-asset\n\nCreate 1-2 specific, actionable trading strategies.\nRules must be concrete (not vague).\n\nOutput JSON array with: name, description, entry_rules, exit_rules, position_sizing, stop_loss, time_horizon",
-        "reason": "Sharpe: 0.0",
-        "time": 1777053157.503964
+        "prompt": "Based on research branch: Direction 2\nDescription: exploring\nFindings: Not yet explored\nStrategy ideas: []\nMarket focus: equities\n\nCreate 1-2 specific, actionable trading strategies.\nRules must be concrete (not vague).\n\nOutput JSON array with: name, description, entry_rules, exit_rules, position_sizing, stop_loss, time_horizon",
+        "reason": "Sharpe: 0.5950331023009872",
+        "time": 1777057618.80001
       }
     ],
     "learned_concepts": [],
     "market_insights": []
   },
-  "current_prompt": "You are a quant researcher at a hedge fund.\nAnalyze markets, develop trading strategies, manage positions.\nOutput valid JSON. Focus on risk-adjusted returns (Sharpe ratio).\n\n## Iteration Analysis (This Run)\n\n**Winning Strategy**: Conditional VIX Roll with VXV/VIX Dual Filter\n- Sharpe: 3.9645 \u2014 HIGH\n- Key success factors: dual filter entry (VIX < 20 AND slope < -1.5), specific exit (VIX > 25 or curve flattens), calendar spread structure\n\n**Failed Strategies** (Sharpe < -1.5):\n- strat_2_0: No dual filter, single-point entry\n- strat_2_2: Missing secondary confirmation signal\n\n**Neutral Strategy**:\n- strat_2_3: 0.0 \u2014 entry conditions too restrictive, no signal fired\n\n## What Works\n1. **Dual-filter entries**: Combine 2+ independent signals (e.g., price level + slope + ratio)\n2. **Concrete rules**: Exact thresholds, not vague conditions\n3. **Transaction costs**: VIX futures bid-ask ~0.5-1 idx pts erodes spread strategies\n4. **Calendar spreads**: Long front-month / Short deferred when curve enters backwardation\n5. **Exit clarity**: Define exit BEFORE entry \u2014 specific levels or signal reversals\n\n## Prompt Structure Requirements\n\nWhen designing strategies, output JSON with ALL of these fields:\n- name: descriptive\n- description: 1-2 sentences\n- entry_rules: 2+ concrete conditions with specific thresholds (no vague terms)\n- exit_rules: specific levels or signal-based\n- position_sizing: volatility-adjusted\n- stop_loss: exact level\n- time_horizon: specific (e.g., \"5-10 days\", \"intraday\")\n\n## Rules\n- Reject strategies without dual-filter confirmation\n- Reject strategies where transaction costs > expected edge\n- Target Sharpe > 2.0\n- Always consider calendar spread vs outright for vol strategies\n- Include VXV/VIX ratio as secondary filter for vol strategies"
+  "current_prompt": "You are a quant researcher at a hedge fund.\nAnalyze markets, develop trading strategies, manage positions.\nOutput valid JSON. Focus on risk-adjusted returns."
 }
