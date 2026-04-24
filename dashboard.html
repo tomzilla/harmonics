@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Harmonics - Quant Agent Dashboard</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', monospace; background: #0a0a0f; color: #e0e0e0; min-height: 100vh; }
+        .container { max-width: 1400px; margin: 0 auto; padding: 20px; }
+
+        header { display: flex; justify-content: space-between; align-items: center; padding: 20px 0; border-bottom: 1px solid #1a1a2e; }
+        header h1 { font-size: 24px; color: #00ff88; font-weight: 300; letter-spacing: 4px; }
+        header .meta { color: #666; font-size: 12px; }
+
+        .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin: 20px 0; }
+        .stat-card { background: #12121a; border: 1px solid #1a1a2e; padding: 16px; border-radius: 8px; }
+        .stat-card .label { font-size: 11px; color: #666; text-transform: uppercase; letter-spacing: 1px; }
+        .stat-card .value { font-size: 28px; color: #00ff88; margin-top: 4px; }
+        .stat-card .sub { font-size: 11px; color: #555; margin-top: 4px; }
+
+        .section { margin: 30px 0; }
+        .section-header { font-size: 14px; color: #888; margin-bottom: 12px; text-transform: uppercase; letter-spacing: 2px; border-left: 3px solid #00ff88; padding-left: 12px; }
+
+        .iterations { display: flex; flex-direction: column; gap: 16px; }
+        .iteration { background: #12121a; border: 1px solid #1a1a2e; border-radius: 8px; overflow: hidden; }
+        .iteration-header { display: flex; justify-content: space-between; align-items: center; padding: 16px; background: #0f0f17; cursor: pointer; }
+        .iteration-header:hover { background: #151520; }
+        .iteration-header h3 { font-size: 14px; font-weight: 500; }
+        .iteration-header .time { font-size: 11px; color: #555; }
+        .iteration-header .branch-tags { display: flex; gap: 6px; margin-top: 6px; }
+        .branch-tag { font-size: 10px; padding: 2px 8px; background: #1a1a2e; border-radius: 4px; color: #00ff88; }
+        .iteration-body { display: none; padding: 16px; border-top: 1px solid #1a1a2e; }
+        .iteration-body.active { display: block; }
+
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+        .panel { background: #0f0f17; border: 1px solid #1a1a2e; border-radius: 6px; padding: 12px; }
+        .panel h4 { font-size: 11px; color: #666; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; }
+        .panel .content { font-size: 13px; line-height: 1.6; }
+
+        .strategies-list { display: flex; flex-direction: column; gap: 8px; }
+        .strategy-item { display: flex; justify-content: space-between; padding: 8px; background: #12121a; border-radius: 4px; }
+        .strategy-item .name { color: #e0e0e0; }
+        .strategy-item .metrics { display: flex; gap: 16px; font-size: 11px; }
+        .strategy-item .metrics span { color: #555; }
+        .strategy-item .metrics span.hit { color: #00ff88; }
+        .strategy-item .metrics span.miss { color: #ff4466; }
+
+        .branch-detail { margin: 12px 0; padding: 12px; background: #12121a; border-radius: 6px; }
+        .branch-detail h5 { font-size: 12px; color: #00ff88; margin-bottom: 8px; }
+        .branch-detail .confidence-bar { height: 4px; background: #1a1a2e; border-radius: 2px; margin-top: 8px; }
+        .branch-detail .confidence-bar .fill { height: 100%; background: #00ff88; border-radius: 2px; }
+
+        .memory-section { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+        .memory-panel { background: #0f0f17; border: 1px solid #1a1a2e; border-radius: 6px; padding: 12px; }
+        .memory-panel h4 { font-size: 11px; color: #666; text-transform: uppercase; margin-bottom: 8px; }
+        .memory-item { font-size: 12px; padding: 6px 0; border-bottom: 1px solid #1a1a2e; color: #888; }
+        .memory-item:last-child { border-bottom: none; }
+        .memory-item .score { color: #00ff88; float: right; }
+
+        .prompt-evolution { background: #0f0f17; border: 1px solid #1a1a2e; border-radius: 6px; padding: 12px; margin-top: 16px; }
+        .prompt-evolution pre { font-size: 11px; color: #555; white-space: pre-wrap; line-height: 1.6; max-height: 150px; overflow-y: auto; }
+
+        .portfolio-summary { display: flex; gap: 24px; padding: 16px; background: #12121a; border-radius: 6px; margin-bottom: 16px; }
+        .portfolio-item { text-align: center; }
+        .portfolio-item .label { font-size: 10px; color: #555; text-transform: uppercase; }
+        .portfolio-item .value { font-size: 20px; color: #00ff88; margin-top: 4px; }
+        .portfolio-item .sub { font-size: 10px; color: #444; }
+
+        .controls { display: flex; gap: 12px; margin: 20px 0; }
+        button { background: #12121a; border: 1px solid #00ff88; color: #00ff88; padding: 10px 20px; border-radius: 6px; cursor: pointer; font-size: 12px; text-transform: uppercase; letter-spacing: 1px; transition: all 0.2s; }
+        button:hover { background: #00ff88; color: #0a0a0f; }
+        button.danger { border-color: #ff4466; color: #ff4466; }
+        button.danger:hover { background: #ff4466; color: #0a0a0f; }
+
+        .hidden { display: none; }
+
+        /* Scrollbar styling */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #0a0a0f; }
+        ::-webkit-scrollbar-thumb { background: #1a1a2e; border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: #2a2a3e; }
+
+        .empty-state { text-align: center; padding: 60px 20px; color: #444; }
+        .empty-state h3 { font-size: 16px; margin-bottom: 8px; }
+        .empty-state p { font-size: 12px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div>
+                <h1>HARMONICS</h1>
+                <div class="meta">Quant Agent Dashboard</div>
+            </div>
+            <div style="text-align: right;">
+                <div style="font-size: 12px; color: #555;" id="last-update">Last update: --</div>
+                <div style="font-size: 11px; color: #333; margin-top: 4px;" id="commit-status"></div>
+            </div>
+        </header>
+
+        <div class="stats">
+            <div class="stat-card">
+                <div class="label">Iterations Run</div>
+                <div class="value" id="stat-iterations">0</div>
+            </div>
+            <div class="stat-card">
+                <div class="label">Active Branches</div>
+                <div class="value" id="stat-branches">0</div>
+            </div>
+            <div class="stat-card">
+                <div class="label">Strategies</div>
+                <div class="value" id="stat-strategies">0</div>
+            </div>
+            <div class="stat-card">
+                <div class="label">Portfolio Value</div>
+                <div class="value" id="stat-portfolio">$0</div>
+                <div class="sub" id="stat-cash">$0 cash</div>
+            </div>
+            <div class="stat-card">
+                <div class="label">Tradeable Rate</div>
+                <div class="value" id="stat-tradeable">0%</div>
+            </div>
+        </div>
+
+        <div class="controls">
+            <button onclick="addIteration()">+ Add Iteration</button>
+            <button onclick="exportData()">Export JSON</button>
+            <button onclick="commitAndPush()">Commit & Push</button>
+        </div>
+
+        <div class="section">
+            <div class="section-header">Iteration History</div>
+            <div class="iterations" id="iterations-list">
+                <div class="empty-state" id="empty-state">
+                    <h3>No iterations recorded</h3>
+                    <p>Add iterations manually or sync from agent</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="section hidden" id="memory-section">
+            <div class="section-header">Agent Memory</div>
+            <div class="memory-section">
+                <div class="memory-panel">
+                    <h4>Successful Patterns</h4>
+                    <div id="memory-successes"></div>
+                </div>
+                <div class="memory-panel">
+                    <h4>Failed Patterns</h4>
+                    <div id="memory-failures"></div>
+                </div>
+                <div class="memory-panel">
+                    <h4>Learned Concepts</h4>
+                    <div id="memory-concepts"></div>
+                </div>
+                <div class="memory-panel">
+                    <h4>Market Insights</h4>
+                    <div id="memory-insights"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section hidden" id="prompt-section">
+            <div class="section-header">System Prompt Evolution</div>
+            <div class="prompt-evolution">
+                <pre id="current-prompt">No prompt recorded</pre>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const STORAGE_KEY = 'harmonics_dashboard';
+        let data = {
+            iterations: [],
+            memory: {
+                successful_prompts: [],
+                failed_prompts: [],
+                learned_concepts: [],
+                market_insights: []
+            },
+            current_prompt: "",
+            portfolio: { total: 0, cash: 0, allocated: 0 }
+        };
+
+        function load() {
+            const saved = localStorage.getItem(STORAGE_KEY);
+            if (saved) {
+                data = JSON.parse(saved);
+            }
+            render();
+        }
+
+        function save() {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+            document.getElementById('last-update').textContent = `Last update: ${new Date().toLocaleTimeString()}`;
+        }
+
+        function render() {
+            renderStats();
+            renderIterations();
+            renderMemory();
+            renderPrompt();
+        }
+
+        function renderStats() {
+            const iters = data.iterations.length;
+            const lastIter = data.iterations[iters - 1] || {};
+            const branches = lastIter.branches || [];
+            const strategies = lastIter.strategies || [];
+            const tradeable = lastIter.backtests ? lastIter.backtests.filter(r => r.is_tradeable).length : 0;
+            const total = lastIter.backtests ? lastIter.backtests.length : 0;
+
+            document.getElementById('stat-iterations').textContent = iters;
+            document.getElementById('stat-branches').textContent = branches.length;
+            document.getElementById('stat-strategies').textContent = strategies.length;
+            document.getElementById('stat-portfolio').textContent = `$${data.portfolio.total.toLocaleString()}`;
+            document.getElementById('stat-cash').textContent = `$${data.portfolio.cash.toLocaleString()} cash`;
+            document.getElementById('stat-tradeable').textContent = total > 0 ? `${Math.round(tradeable/total*100)}%` : '0%';
+        }
+
+        function renderIterations() {
+            const list = document.getElementById('iterations-list');
+            const empty = document.getElementById('empty-state');
+
+            if (data.iterations.length === 0) {
+                empty.classList.remove('hidden');
+                list.innerHTML = '';
+                list.appendChild(empty);
+                return;
+            }
+
+            empty.classList.add('hidden');
+            list.innerHTML = data.iterations.map((iter, idx) => `
+                <div class="iteration">
+                    <div class="iteration-header" onclick="toggleIteration(${idx})">
+                        <div>
+                            <h3>Iteration ${iter.iteration || idx + 1}</h3>
+                            <div class="branch-tags">
+                                ${(iter.branches || []).map(b => `<span class="branch-tag">${b.name || b.id}</span>`).join('')}
+                            </div>
+                        </div>
+                        <div class="time">${iter.timestamp ? new Date(iter.timestamp).toLocaleString() : '--'}</div>
+                    </div>
+                    <div class="iteration-body" id="iter-body-${idx}">
+                        ${renderIterationBody(iter)}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function renderIterationBody(iter) {
+            const branches = iter.branches || [];
+            const strategies = iter.strategies || [];
+            const backtests = iter.backtests || [];
+            const deployed = iter.deployed || [];
+            const crossCount = backtests.filter(b => b.is_cross).length;
+
+            return `
+                <div class="portfolio-summary">
+                    <div class="portfolio-item">
+                        <div class="label">Portfolio</div>
+                        <div class="value">$${iter.portfolio?.total || 0}</div>
+                        <div class="sub">${iter.portfolio?.cash || 0} cash</div>
+                    </div>
+                    <div class="portfolio-item">
+                        <div class="label">Strategies</div>
+                        <div class="value">${strategies.length}</div>
+                        <div class="sub">${crossCount} hybrids</div>
+                    </div>
+                    <div class="portfolio-item">
+                        <div class="label">Tradeable</div>
+                        <div class="value">${backtests.filter(b => b.is_tradeable).length}/${backtests.length}</div>
+                        <div class="sub">deployed: ${deployed.length}</div>
+                    </div>
+                </div>
+
+                <div class="grid-2">
+                    <div class="panel">
+                        <h4>Branches</h4>
+                        <div class="content">
+                            ${branches.map(b => `
+                                <div class="branch-detail">
+                                    <h5>${b.name || b.id} (conf: ${(b.confidence || 0).toFixed(2)})</h5>
+                                    <div>${b.description || ''}</div>
+                                    <div>Hypothesis: ${b.hypothesis || ''}</div>
+                                    <div>Iterations: ${b.iterations_run || 0}</div>
+                                    <div class="confidence-bar"><div class="fill" style="width: ${(b.confidence || 0) * 100}%"></div></div>
+                                    ${b.findings?.length ? `<div style="margin-top:8px;color:#555;font-size:11px;">Latest: ${b.findings[b.findings.length-1]}</div>` : ''}
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                    <div class="panel">
+                        <h4>Strategies & Backtests</h4>
+                        <div class="strategies-list">
+                            ${backtests.map(bt => {
+                                const strat = strategies.find(s => s.id === bt.strategy_id) || {};
+                                return `
+                                <div class="strategy-item">
+                                    <span class="name">${strat.name || bt.strategy_id}${bt.is_cross ? ' [H]' : ''}</span>
+                                    <div class="metrics">
+                                        <span class="${bt.sharpe_ratio > 1 ? 'hit' : 'miss'}">sharpe: ${bt.sharpe_ratio?.toFixed(2) || '-'}</span>
+                                        <span class="${bt.max_drawdown < 10 ? 'hit' : 'miss'}">dd: ${bt.max_drawdown?.toFixed(1) || '-'}%</span>
+                                        <span class="${bt.is_tradeable ? 'hit' : 'miss'}">${bt.is_tradeable ? '✓' : '✗'}</span>
+                                    </div>
+                                </div>
+                            `}).join('')}
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderMemory() {
+            const section = document.getElementById('memory-section');
+            if (data.memory.successful_prompts.length === 0 && data.memory.failed_prompts.length === 0) {
+                section.classList.add('hidden');
+                return;
+            }
+            section.classList.remove('hidden');
+
+            const makeList = (items, scoreKey) => items.slice(-5).map(item => `
+                <div class="memory-item">
+                    ${(item.prompt || item).substring(0, 80)}...
+                    ${item[scoreKey] ? `<span class="score">${item[scoreKey]}</span>` : ''}
+                </div>
+            `).join('');
+
+            document.getElementById('memory-successes').innerHTML = makeList(data.memory.successful_prompts, 'score');
+            document.getElementById('memory-failures').innerHTML = makeList(data.memory.failed_prompts, null);
+            document.getElementById('memory-concepts').innerHTML = data.memory.learned_concepts.slice(-5).map(c => `<div class="memory-item">${c}</div>`).join('');
+            document.getElementById('memory-insights').innerHTML = data.memory.market_insights.slice(-5).map(i => `<div class="memory-item">${i}</div>`).join('');
+        }
+
+        function renderPrompt() {
+            const section = document.getElementById('prompt-section');
+            if (!data.current_prompt) {
+                section.classList.add('hidden');
+                return;
+            }
+            section.classList.remove('hidden');
+            document.getElementById('current-prompt').textContent = data.current_prompt;
+        }
+
+        function toggleIteration(idx) {
+            const body = document.getElementById(`iter-body-${idx}`);
+            body.classList.toggle('active');
+        }
+
+        function addIteration() {
+            const iter = {
+                iteration: data.iterations.length + 1,
+                timestamp: Date.now(),
+                branches: [
+                    { id: 'branch_0', name: 'momentum_explorer', description: 'Price momentum patterns', hypothesis: 'Momentum continues after breakouts', confidence: 0.65, iterations_run: 2, findings: ['Breakout with volume confirmation works'], market_focus: 'equities' },
+                    { id: 'branch_1', name: 'mean_reversion_angles', description: 'Overbought/oversold levels', hypothesis: 'Prices revert to moving average', confidence: 0.45, iterations_run: 1, findings: [], market_focus: 'sp500' }
+                ],
+                strategies: [
+                    { id: 'strat_1', name: 'breakout_momentum', market_focus: 'equities' },
+                    { id: 'strat_2', name: 'ma_reversion', market_focus: 'sp500' }
+                ],
+                backtests: [
+                    { strategy_id: 'strat_1', sharpe_ratio: 1.45, max_drawdown: 8.2, is_tradeable: true, is_cross: false },
+                    { strategy_id: 'strat_2', sharpe_ratio: 0.82, max_drawdown: 12.1, is_tradeable: false, is_cross: false }
+                ],
+                deployed: ['strat_1'],
+                portfolio: { total: 10500, cash: 8500, allocated: 2000 }
+            };
+
+            data.iterations.push(iter);
+            data.portfolio = iter.portfolio;
+            save();
+            render();
+        }
+
+        function exportData() {
+            const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `harmonics_export_${Date.now()}.json`;
+            a.click();
+        }
+
+        async function commitAndPush() {
+            const status = document.getElementById('commit-status');
+            status.textContent = 'Committing...';
+
+            try {
+                const fs = require('fs');
+                const { execSync } = require('child_process');
+
+                const timestamp = new Date().toISOString();
+                const exportPath = `/Users/tomwu/harmonics/history_${Date.now()}.json`;
+                fs.writeFileSync(exportPath, JSON.stringify(data, null, 2));
+
+                process.chdir('/Users/tomwu/harmonics');
+                execSync('git add .', { stdio: 'inherit' });
+                execSync(`git commit -m "Update dashboard ${timestamp}"`, { stdio: 'inherit' });
+                execSync('git push', { stdio: 'inherit' });
+
+                status.textContent = '✓ Pushed';
+                setTimeout(() => { status.textContent = ''; }, 3000);
+            } catch (e) {
+                status.textContent = 'Error: ' + e.message;
+            }
+        }
+
+        function updateFromAgent(agentData) {
+            data.iterations.push({
+                iteration: data.iterations.length + 1,
+                timestamp: Date.now(),
+                branches: agentData.branches || [],
+                strategies: agentData.strategies || [],
+                backtests: agentData.backtests || [],
+                deployed: agentData.deployed || [],
+                portfolio: agentData.portfolio || data.portfolio
+            });
+            data.portfolio = data.iterations[data.iterations.length - 1].portfolio || data.portfolio;
+            data.memory = { ...data.memory, ...agentData.memory };
+            data.current_prompt = agentData.current_prompt || data.current_prompt;
+            save();
+            render();
+        }
+
+        // Expose for agent to call
+        window.updateFromAgent = updateFromAgent;
+
+        // Load on init
+        load();
+    </script>
+</body>
+</html>
