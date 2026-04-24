@@ -16,3 +16,6 @@ next-env.d.ts
 .pnp
 .pnp.js
 .yarn/install-state.gz
+
+# OpenNext
+.open-next
