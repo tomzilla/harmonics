@@ -7,8 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "preview": "wrangler pages dev .next",
-    "deploy": "wrangler pages deploy .next"
+    "preview": "wrangler pages dev out",
+    "deploy": "npm run build && wrangler pages deploy out"
   },
   "dependencies": {
     "next": "^16.2.2",
